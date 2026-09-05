@@ -1,0 +1,4384 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pulso Marino | Cevichería</title>
+
+<style>
+
+/* =========================================================
+   PULSO MARINO
+   OCÉANO ANIMADO
+========================================================= */
+
+:root{
+    --deep:#001b44;
+    --blue:#003b78;
+    --blue2:#0077b6;
+    --cyan:#00c9e8;
+    --cyan-light:#9ff4ff;
+
+    --pink:#ff0878;
+    --yellow:#ffd21c;
+
+    --white:#fff;
+    --cream:#f5fcff;
+    --text:#07345f;
+    --gray:#6c8194;
+
+    --green:#25D366;
+
+    --shadow:
+        0 20px 50px rgba(0,35,75,.15);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:var(--cream);
+    color:var(--text);
+
+    overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+    width:9px;
+}
+
+::-webkit-scrollbar-track{
+    background:#e8faff;
+}
+
+::-webkit-scrollbar-thumb{
+    background:
+        linear-gradient(
+            var(--cyan),
+            var(--blue)
+        );
+
+    border-radius:20px;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar{
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:75px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    z-index:1000;
+
+    background:
+        rgba(0,27,68,.72);
+
+    backdrop-filter:blur(16px);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.12);
+
+    transition:.4s;
+}
+
+.navbar.scrolled{
+    background:
+        rgba(0,27,68,.96);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.2);
+}
+
+.logo-nav{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    color:white;
+    text-decoration:none;
+
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo-nav img{
+    width:48px;
+    height:48px;
+
+    object-fit:contain;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:800;
+
+    position:relative;
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--yellow);
+}
+
+.nav-links a::after{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-7px;
+
+    width:0;
+    height:3px;
+
+    background:var(--yellow);
+
+    border-radius:20px;
+
+    transform:translateX(-50%);
+
+    transition:.3s;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+.cart-nav{
+    position:relative;
+
+    width:48px;
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink),
+            #ff4a9d
+        );
+
+    color:white;
+
+    font-size:21px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 25px
+        rgba(255,8,120,.3);
+
+    transition:.3s;
+}
+
+.cart-nav:hover{
+    transform:
+        translateY(-3px)
+        scale(1.08);
+}
+
+.cart-number{
+    position:absolute;
+
+    top:-4px;
+    right:-4px;
+
+    width:22px;
+    height:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:var(--yellow);
+
+    color:var(--deep);
+
+    font-size:11px;
+    font-weight:900;
+
+    transition:.25s;
+}
+
+.cart-number.bump{
+    animation:
+        cartBump
+        .45s
+        ease;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    min-height:100vh;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:
+        120px
+        20px
+        170px;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 8%,
+            #1ce0ef 0%,
+            #009bd0 28%,
+            #006aa8 55%,
+            #003d78 78%,
+            #001b44 100%
+        );
+}
+
+
+/* profundidad */
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at 15% 80%,
+            rgba(0,240,255,.17),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,255,255,.12),
+            transparent 28%
+        );
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   RAYOS DE LUZ
+========================================================= */
+
+.sun-rays{
+    position:absolute;
+
+    top:-330px;
+    left:50%;
+
+    width:850px;
+    height:850px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        conic-gradient(
+            from 180deg,
+            transparent,
+            rgba(255,255,255,.12),
+            transparent 18%,
+            rgba(255,255,255,.07),
+            transparent 35%,
+            rgba(255,255,255,.08),
+            transparent 55%
+        );
+
+    filter:blur(10px);
+
+    animation:
+        rotateLight
+        25s
+        linear
+        infinite;
+
+    pointer-events:none;
+
+    z-index:1;
+}
+
+
+/* =========================================================
+   CAPAS DE OCÉANO
+========================================================= */
+
+.ocean-depth{
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+    height:45%;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,15,55,.65),
+            transparent
+        );
+
+    pointer-events:none;
+
+    z-index:2;
+}
+
+
+/* =========================================================
+   BURBUJAS
+========================================================= */
+
+.bubbles{
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:4;
+}
+
+.bubble{
+    position:absolute;
+
+    bottom:-80px;
+
+    width:15px;
+    height:15px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.5);
+
+    border-radius:50%;
+
+    box-shadow:
+        inset 2px 2px 5px
+        rgba(255,255,255,.6),
+        0 0 8px
+        rgba(255,255,255,.1);
+
+    animation:
+        bubbleRise
+        var(--duration)
+        linear
+        infinite;
+
+    animation-delay:
+        var(--delay);
+}
+
+.bubble:nth-child(1){
+    left:3%;
+    --duration:9s;
+    --delay:0s;
+    width:10px;
+    height:10px;
+}
+
+.bubble:nth-child(2){
+    left:8%;
+    --duration:14s;
+    --delay:3s;
+    width:23px;
+    height:23px;
+}
+
+.bubble:nth-child(3){
+    left:15%;
+    --duration:10s;
+    --delay:5s;
+    width:14px;
+    height:14px;
+}
+
+.bubble:nth-child(4){
+    left:22%;
+    --duration:17s;
+    --delay:1s;
+    width:8px;
+    height:8px;
+}
+
+.bubble:nth-child(5){
+    left:29%;
+    --duration:11s;
+    --delay:4s;
+    width:20px;
+    height:20px;
+}
+
+.bubble:nth-child(6){
+    left:36%;
+    --duration:15s;
+    --delay:2s;
+    width:11px;
+    height:11px;
+}
+
+.bubble:nth-child(7){
+    left:43%;
+    --duration:9s;
+    --delay:6s;
+    width:25px;
+    height:25px;
+}
+
+.bubble:nth-child(8){
+    left:50%;
+    --duration:13s;
+    --delay:1s;
+    width:9px;
+    height:9px;
+}
+
+.bubble:nth-child(9){
+    left:57%;
+    --duration:18s;
+    --delay:7s;
+    width:17px;
+    height:17px;
+}
+
+.bubble:nth-child(10){
+    left:64%;
+    --duration:11s;
+    --delay:2s;
+    width:27px;
+    height:27px;
+}
+
+.bubble:nth-child(11){
+    left:71%;
+    --duration:14s;
+    --delay:5s;
+    width:12px;
+    height:12px;
+}
+
+.bubble:nth-child(12){
+    left:78%;
+    --duration:10s;
+    --delay:3s;
+    width:20px;
+    height:20px;
+}
+
+.bubble:nth-child(13){
+    left:85%;
+    --duration:16s;
+    --delay:6s;
+    width:9px;
+    height:9px;
+}
+
+.bubble:nth-child(14){
+    left:92%;
+    --duration:12s;
+    --delay:1s;
+    width:24px;
+    height:24px;
+}
+
+.bubble:nth-child(15){
+    left:97%;
+    --duration:19s;
+    --delay:4s;
+    width:13px;
+    height:13px;
+}
+
+
+/* =========================================================
+   PECES
+========================================================= */
+
+.sea-creatures{
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:5;
+}
+
+.fish{
+    position:absolute;
+
+    font-size:34px;
+
+    opacity:.4;
+
+    filter:
+        drop-shadow(
+            0 4px 8px
+            rgba(0,0,0,.12)
+        );
+
+    animation:
+        fishSwim
+        var(--speed)
+        linear
+        infinite;
+
+    animation-delay:
+        var(--delay);
+}
+
+.fish.small{
+    font-size:22px;
+    opacity:.25;
+}
+
+.fish.big{
+    font-size:45px;
+    opacity:.28;
+}
+
+.fish:nth-child(1){
+    top:15%;
+    left:-80px;
+    --speed:18s;
+    --delay:1s;
+}
+
+.fish:nth-child(2){
+    top:25%;
+    left:-90px;
+    --speed:25s;
+    --delay:6s;
+}
+
+.fish:nth-child(3){
+    top:38%;
+    left:-70px;
+    --speed:15s;
+    --delay:3s;
+}
+
+.fish:nth-child(4){
+    top:53%;
+    left:-100px;
+    --speed:22s;
+    --delay:8s;
+}
+
+.fish:nth-child(5){
+    top:68%;
+    left:-80px;
+    --speed:17s;
+    --delay:4s;
+}
+
+.fish:nth-child(6){
+    top:80%;
+    left:-90px;
+    --speed:27s;
+    --delay:11s;
+}
+
+.fish:nth-child(7){
+    top:31%;
+    left:-50px;
+    --speed:13s;
+    --delay:12s;
+}
+
+.fish:nth-child(8){
+    top:61%;
+    left:-70px;
+    --speed:20s;
+    --delay:15s;
+}
+
+.fish:nth-child(9){
+    top:10%;
+    left:-80px;
+    --speed:30s;
+    --delay:10s;
+}
+
+.fish:nth-child(10){
+    top:46%;
+    left:-60px;
+    --speed:19s;
+    --delay:18s;
+}
+
+.fish:nth-child(11){
+    top:73%;
+    left:-70px;
+    --speed:24s;
+    --delay:20s;
+}
+
+.fish.eaten{
+    animation:
+        fishEaten
+        .45s
+        ease
+        forwards !important;
+}
+
+
+/* =========================================================
+   CAMARONES
+========================================================= */
+
+.shrimp{
+    position:absolute;
+
+    font-size:32px;
+
+    opacity:.35;
+
+    animation:
+        shrimpSwim
+        var(--speed)
+        linear
+        infinite;
+
+    animation-delay:
+        var(--delay);
+}
+
+.shrimp:nth-child(12){
+    top:20%;
+    left:-80px;
+    --speed:21s;
+    --delay:4s;
+}
+
+.shrimp:nth-child(13){
+    top:58%;
+    left:-80px;
+    --speed:26s;
+    --delay:12s;
+}
+
+.shrimp:nth-child(14){
+    top:76%;
+    left:-80px;
+    --speed:18s;
+    --delay:7s;
+}
+
+
+/* =========================================================
+   PULPOS
+========================================================= */
+
+.background-octopus{
+    position:absolute;
+
+    font-size:55px;
+
+    opacity:0;
+
+    animation:
+        octopusBackground
+        22s
+        ease-in-out
+        infinite;
+
+    z-index:3;
+}
+
+.octopus-one{
+    left:8%;
+    bottom:15%;
+
+    animation-delay:4s;
+}
+
+.octopus-two{
+    right:8%;
+    top:32%;
+
+    animation-delay:13s;
+}
+
+
+/* =========================================================
+   TIBURÓN
+========================================================= */
+
+.shark{
+    position:absolute;
+
+    z-index:6;
+
+    left:-180px;
+
+    top:46%;
+
+    font-size:95px;
+
+    opacity:0;
+
+    filter:
+        drop-shadow(
+            0 10px 15px
+            rgba(0,20,50,.3)
+        );
+
+    pointer-events:none;
+
+    animation:
+        sharkSwim
+        11s
+        linear
+        infinite;
+
+    animation-delay:8s;
+}
+
+
+/* pequeña sombra del tiburón */
+
+.shark-shadow{
+    position:absolute;
+
+    z-index:3;
+
+    width:250px;
+    height:35px;
+
+    border-radius:50%;
+
+    background:
+        rgba(0,20,50,.15);
+
+    filter:blur(15px);
+
+    left:-250px;
+    top:55%;
+
+    opacity:0;
+
+    animation:
+        sharkShadow
+        11s
+        linear
+        infinite;
+
+    animation-delay:8s;
+}
+
+
+/* =========================================================
+   HERO CONTENIDO
+========================================================= */
+
+.hero-content{
+    position:relative;
+
+    z-index:20;
+
+    max-width:900px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.hero-logo{
+    width:
+        min(
+            450px,
+            78vw
+        );
+
+    max-height:450px;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(
+            0 25px 35px
+            rgba(0,0,0,.32)
+        );
+
+    animation:
+        logoAppear
+        1.3s
+        ease,
+        logoFloat
+        5s
+        ease-in-out
+        1.3s
+        infinite;
+}
+
+
+/* =========================================================
+   FRASE DEBAJO DEL LOGO
+========================================================= */
+
+.hero-tag{
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    margin-top:18px;
+
+    padding:
+        10px
+        26px;
+
+    border-radius:40px;
+
+    background:
+        rgba(0,80,150,.28);
+
+    border:
+        1px solid
+        rgba(255,255,255,.3);
+
+    color:var(--yellow);
+
+    font-size:13px;
+
+    font-weight:1000;
+
+    letter-spacing:5px;
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+
+    animation:
+        fadeUp
+        1s
+        ease;
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   TITULO
+========================================================= */
+
+.hero h1{
+    margin-top:25px;
+
+    color:white;
+
+    font-size:
+        clamp(
+            42px,
+            7vw,
+            78px
+        );
+
+    line-height:.95;
+
+    font-weight:1000;
+
+    letter-spacing:-2px;
+
+    text-shadow:
+        0 10px 30px
+        rgba(0,0,0,.3);
+
+    animation:
+        fadeUp
+        1.3s
+        ease;
+}
+
+.hero h1 span{
+    color:var(--yellow);
+}
+
+
+/* =========================================================
+   DESCRIPCIÓN
+========================================================= */
+
+.hero-description{
+    max-width:650px;
+
+    margin:22px auto 0;
+
+    color:
+        rgba(255,255,255,.88);
+
+    font-size:18px;
+
+    line-height:1.7;
+
+    animation:
+        fadeUp
+        1.5s
+        ease;
+}
+
+
+/* =========================================================
+   BOTÓN
+========================================================= */
+
+.hero-button{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:30px;
+
+    padding:
+        17px
+        28px;
+
+    border-radius:50px;
+
+    background:var(--yellow);
+
+    color:var(--deep);
+
+    text-decoration:none;
+
+    font-weight:1000;
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.25);
+
+    transition:.3s;
+
+    animation:
+        fadeUp
+        1.8s
+        ease;
+}
+
+.hero-button:hover{
+    transform:
+        translateY(-5px)
+        scale(1.04);
+}
+
+
+/* =========================================================
+   OLAS
+========================================================= */
+
+.hero-waves{
+    position:absolute;
+
+    bottom:-2px;
+    left:0;
+
+    width:100%;
+    height:150px;
+
+    z-index:30;
+
+    overflow:hidden;
+}
+
+.wave{
+    position:absolute;
+
+    bottom:-100px;
+    left:-10%;
+
+    width:120%;
+    height:170px;
+
+    border-radius:
+        50%
+        50%
+        0
+        0 /
+        100%
+        100%
+        0
+        0;
+}
+
+.wave-1{
+    background:#eafaff;
+
+    animation:
+        waveMove
+        8s
+        ease-in-out
+        infinite;
+}
+
+.wave-2{
+    bottom:-120px;
+
+    background:#c7f7ff;
+
+    opacity:.7;
+
+    animation:
+        waveMove
+        11s
+        ease-in-out
+        infinite
+        reverse;
+}
+
+.wave-3{
+    bottom:-140px;
+
+    background:white;
+
+    opacity:.85;
+
+    animation:
+        waveMove
+        14s
+        ease-in-out
+        infinite;
+}
+
+
+/* =========================================================
+   MENÚ
+========================================================= */
+
+.menu-section{
+    position:relative;
+
+    padding:
+        110px
+        20px;
+
+    background:
+        linear-gradient(
+            #eafaff,
+            #ffffff
+        );
+
+    overflow:hidden;
+}
+
+.section-heading{
+    text-align:center;
+
+    max-width:700px;
+
+    margin:
+        0 auto
+        60px;
+}
+
+.section-label{
+    color:var(--pink);
+
+    font-size:12px;
+
+    font-weight:1000;
+
+    letter-spacing:5px;
+}
+
+.section-heading h2{
+    margin-top:10px;
+
+    color:var(--deep);
+
+    font-size:
+        clamp(
+            36px,
+            5vw,
+            55px
+        );
+
+    font-weight:1000;
+}
+
+.section-heading h2 span{
+    color:var(--pink);
+}
+
+.section-heading p{
+    margin-top:15px;
+
+    color:var(--gray);
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   PRODUCTOS
+========================================================= */
+
+.products{
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:30px;
+}
+
+.product{
+    position:relative;
+
+    background:white;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    transform:
+        translateY(50px);
+
+    opacity:0;
+
+    transition:
+        .7s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+.product.visible{
+    opacity:1;
+
+    transform:
+        translateY(0);
+}
+
+.product:hover{
+    transform:
+        translateY(-14px);
+}
+
+.product-image-box{
+    height:285px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #bff7ff,
+            #008fd0
+        );
+}
+
+.product-image{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform .8s;
+}
+
+.product:hover .product-image{
+    transform:scale(1.1);
+}
+
+.product-image-box::after{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent 55%,
+            rgba(0,20,50,.35)
+        );
+}
+
+.product-number{
+    position:absolute;
+
+    z-index:5;
+
+    top:18px;
+    left:18px;
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.9);
+
+    color:var(--blue);
+
+    font-weight:1000;
+}
+
+.product-badge{
+    position:absolute;
+
+    z-index:5;
+
+    top:20px;
+    right:18px;
+
+    padding:8px 13px;
+
+    border-radius:30px;
+
+    background:var(--yellow);
+
+    color:var(--deep);
+
+    font-size:11px;
+
+    font-weight:1000;
+}
+
+.product-content{
+    padding:28px;
+}
+
+.product-content h3{
+    color:var(--blue);
+
+    font-size:26px;
+
+    font-weight:1000;
+}
+
+.product-content p{
+    margin-top:10px;
+
+    min-height:52px;
+
+    color:var(--gray);
+
+    line-height:1.5;
+
+    font-size:14px;
+}
+
+.product-bottom{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-top:23px;
+}
+
+.product-price{
+    color:var(--pink);
+
+    font-size:29px;
+
+    font-weight:1000;
+}
+
+.add-button{
+    border:none;
+
+    padding:
+        13px
+        17px;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--cyan)
+        );
+
+    color:white;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.add-button:hover{
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 20px
+        rgba(0,130,200,.25);
+}
+
+
+/* =========================================================
+   MENSAJE
+========================================================= */
+
+.ocean-message{
+    position:relative;
+
+    margin-top:90px;
+
+    padding:
+        70px
+        20px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #002455,
+            #006ca7
+        );
+
+    overflow:hidden;
+}
+
+.ocean-message h2{
+    position:relative;
+
+    z-index:2;
+
+    color:white;
+
+    font-size:
+        clamp(
+            28px,
+            5vw,
+            48px
+        );
+
+    font-weight:1000;
+}
+
+.ocean-message h2 span{
+    color:var(--yellow);
+}
+
+.ocean-message p{
+    position:relative;
+
+    z-index:2;
+
+    max-width:650px;
+
+    margin:18px auto 0;
+
+    color:
+        rgba(255,255,255,.8);
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   PEDIDO
+========================================================= */
+
+.order-section{
+    padding:
+        110px
+        20px;
+
+    background:#f5fcff;
+}
+
+.order-container{
+    max-width:1100px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap:30px;
+}
+
+.order-card{
+    background:white;
+
+    border-radius:27px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+}
+
+.order-title{
+    padding:23px 27px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--cyan)
+        );
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:1000;
+}
+
+.order-body{
+    padding:28px;
+}
+
+.empty-cart{
+    padding:40px 10px;
+
+    text-align:center;
+
+    color:var(--gray);
+}
+
+.empty-cart-icon{
+    font-size:50px;
+
+    margin-bottom:15px;
+}
+
+.cart-item{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        auto;
+
+    gap:12px;
+
+    padding:
+        16px 0;
+
+    border-bottom:
+        1px solid
+        #e5eef3;
+}
+
+.cart-item-name{
+    color:var(--blue);
+
+    font-weight:1000;
+}
+
+.cart-item-price{
+    margin-top:4px;
+
+    color:var(--gray);
+
+    font-size:13px;
+}
+
+.cart-controls{
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+}
+
+.qty-button{
+    width:30px;
+    height:30px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:var(--cyan);
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+}
+
+.delete-button{
+    background:#ff4c61;
+}
+
+.item-total{
+    grid-column:1/-1;
+
+    text-align:right;
+
+    color:var(--pink);
+
+    font-weight:1000;
+}
+
+.order-total{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:22px;
+
+    padding-top:20px;
+
+    border-top:
+        2px solid
+        #e5eef3;
+
+    font-size:25px;
+
+    font-weight:1000;
+}
+
+.order-total span:last-child{
+    color:var(--pink);
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+.form-group{
+    margin-bottom:17px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:7px;
+
+    color:var(--text);
+
+    font-size:13px;
+
+    font-weight:1000;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+
+    padding:14px;
+
+    border:
+        2px solid
+        #dceaf1;
+
+    border-radius:13px;
+
+    outline:none;
+
+    color:var(--text);
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+.form-group textarea{
+    min-height:90px;
+
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+    border-color:var(--cyan);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(0,201,232,.1);
+}
+
+.whatsapp-button{
+    width:100%;
+
+    padding:17px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1fba59,
+            #25D366
+        );
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:1000;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.whatsapp-button:hover{
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 25px
+        rgba(37,211,102,.3);
+}
+
+.whatsapp-info{
+    text-align:center;
+
+    margin-top:10px;
+
+    color:var(--gray);
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   CARRITO LATERAL
+========================================================= */
+
+.overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:2000;
+
+    background:
+        rgba(0,15,40,.6);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+}
+
+.overlay.active{
+    opacity:1;
+
+    visibility:visible;
+}
+
+.cart-panel{
+    position:fixed;
+
+    z-index:3000;
+
+    top:0;
+    right:-460px;
+
+    width:
+        min(
+            450px,
+            94vw
+        );
+
+    height:100vh;
+
+    padding:25px;
+
+    background:white;
+
+    box-shadow:
+        -15px 0 40px
+        rgba(0,0,0,.25);
+
+    overflow-y:auto;
+
+    transition:.45s
+        cubic-bezier(.7,0,.2,1);
+}
+
+.cart-panel.active{
+    right:0;
+}
+
+.cart-panel-header{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.cart-panel-header h2{
+    color:var(--blue);
+}
+
+.close-cart{
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#edf5f8;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    position:relative;
+
+    padding:
+        80px
+        20px
+        35px;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            180deg,
+            #001b44,
+            #000e29
+        );
+
+    overflow:hidden;
+}
+
+.footer-logo{
+    width:95px;
+    height:95px;
+
+    object-fit:contain;
+
+    position:relative;
+    z-index:2;
+}
+
+footer h3{
+    position:relative;
+    z-index:2;
+
+    margin-top:10px;
+
+    color:var(--yellow);
+
+    font-size:23px;
+}
+
+.footer-slogan{
+    position:relative;
+    z-index:2;
+
+    margin-top:10px;
+
+    color:
+        rgba(255,255,255,.8);
+
+    font-size:14px;
+}
+
+.footer-whatsapp{
+    position:relative;
+    z-index:2;
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    padding:12px 22px;
+
+    border-radius:30px;
+
+    background:var(--green);
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:900;
+}
+
+.footer-bottom{
+    position:relative;
+    z-index:2;
+
+    margin-top:30px;
+
+    padding-top:20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.1);
+
+    color:
+        rgba(255,255,255,.5);
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   ANIMACIONES
+========================================================= */
+
+@keyframes bubbleRise{
+
+    0%{
+        transform:
+            translateY(0)
+            translateX(0)
+            scale(.5);
+
+        opacity:0;
+    }
+
+    15%{
+        opacity:.8;
+    }
+
+    50%{
+        transform:
+            translateY(-50vh)
+            translateX(35px)
+            scale(1);
+    }
+
+    100%{
+        transform:
+            translateY(-120vh)
+            translateX(-30px)
+            scale(1.3);
+
+        opacity:0;
+    }
+}
+
+
+@keyframes fishSwim{
+
+    0%{
+        transform:
+            translateX(-120px)
+            translateY(0)
+            scaleX(1);
+    }
+
+    25%{
+        transform:
+            translateX(25vw)
+            translateY(-25px)
+            scaleX(1);
+    }
+
+    50%{
+        transform:
+            translateX(55vw)
+            translateY(20px)
+            scaleX(1);
+    }
+
+    75%{
+        transform:
+            translateX(82vw)
+            translateY(-30px)
+            scaleX(1);
+    }
+
+    100%{
+        transform:
+            translateX(115vw)
+            translateY(10px)
+            scaleX(1);
+    }
+}
+
+
+@keyframes shrimpSwim{
+
+    0%{
+        transform:
+            translateX(-100px)
+            translateY(0)
+            rotate(0);
+    }
+
+    30%{
+        transform:
+            translateX(30vw)
+            translateY(-25px)
+            rotate(-5deg);
+    }
+
+    60%{
+        transform:
+            translateX(65vw)
+            translateY(20px)
+            rotate(5deg);
+    }
+
+    100%{
+        transform:
+            translateX(115vw)
+            translateY(-10px)
+            rotate(0);
+    }
+}
+
+
+@keyframes fishEaten{
+
+    0%{
+        opacity:.45;
+        transform:
+            scale(1);
+    }
+
+    50%{
+        opacity:1;
+        transform:
+            scale(1.3);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            scale(.05);
+    }
+}
+
+
+@keyframes sharkSwim{
+
+    0%{
+        opacity:0;
+
+        transform:
+            translateX(-180px)
+            translateY(0)
+            scale(.75)
+            rotate(2deg);
+    }
+
+    8%{
+        opacity:.25;
+    }
+
+    18%{
+        opacity:.5;
+
+        transform:
+            translateX(15vw)
+            translateY(-12px)
+            scale(.85)
+            rotate(0);
+    }
+
+    40%{
+        opacity:.65;
+
+        transform:
+            translateX(45vw)
+            translateY(12px)
+            scale(.95)
+            rotate(-2deg);
+    }
+
+    65%{
+        opacity:.55;
+
+        transform:
+            translateX(70vw)
+            translateY(-8px)
+            scale(.9)
+            rotate(1deg);
+    }
+
+    85%{
+        opacity:.35;
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translateX(120vw)
+            translateY(15px)
+            scale(.75)
+            rotate(2deg);
+    }
+}
+
+
+@keyframes sharkShadow{
+
+    0%{
+        opacity:0;
+        transform:translateX(-100px);
+    }
+
+    15%{
+        opacity:.25;
+    }
+
+    70%{
+        opacity:.2;
+    }
+
+    100%{
+        opacity:0;
+        transform:translateX(120vw);
+    }
+}
+
+
+@keyframes octopusBackground{
+
+    0%{
+        opacity:0;
+        transform:
+            translateY(30px)
+            scale(.7);
+    }
+
+    15%{
+        opacity:.25;
+    }
+
+    40%{
+        transform:
+            translateY(-20px)
+            scale(1);
+    }
+
+    65%{
+        opacity:.2;
+        transform:
+            translateY(15px)
+            scale(.95);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            translateY(-30px)
+            scale(.7);
+    }
+}
+
+
+@keyframes logoAppear{
+
+    from{
+        opacity:0;
+
+        transform:
+            scale(.65)
+            rotate(-6deg);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            scale(1)
+            rotate(0);
+    }
+}
+
+
+@keyframes logoFloat{
+
+    0%,100%{
+        transform:
+            translateY(0);
+    }
+
+    50%{
+        transform:
+            translateY(-8px);
+    }
+}
+
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+@keyframes waveMove{
+
+    0%,100%{
+        transform:
+            translateX(0)
+            rotate(0);
+    }
+
+    50%{
+        transform:
+            translateX(-4%)
+            rotate(1deg);
+    }
+}
+
+
+@keyframes rotateLight{
+
+    to{
+        transform:
+            translateX(-50%)
+            rotate(360deg);
+    }
+}
+
+
+@keyframes cartBump{
+
+    0%{
+        transform:scale(1);
+    }
+
+    40%{
+        transform:
+            scale(1.4)
+            rotate(-8deg);
+    }
+
+    70%{
+        transform:
+            scale(.9)
+            rotate(6deg);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+
+
+/* =========================================================
+   MODAL DE PERSONALIZACIÓN DEL CEVICHE
+========================================================= */
+
+.custom-modal{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,15,40,.72);
+    backdrop-filter:blur(8px);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s ease;
+}
+
+.custom-modal.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.custom-modal-card{
+    width:min(520px, 96vw);
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:28px;
+    box-shadow:0 25px 70px rgba(0,0,0,.32);
+    transform:translateY(25px) scale(.96);
+    transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.custom-modal.active .custom-modal-card{
+    transform:translateY(0) scale(1);
+}
+
+.custom-modal-header{
+    padding:24px 26px 18px;
+    background:linear-gradient(135deg,var(--blue),var(--cyan));
+    color:white;
+}
+
+.custom-modal-header h3{
+    font-size:24px;
+    font-weight:1000;
+}
+
+.custom-modal-header p{
+    margin-top:7px;
+    opacity:.88;
+    font-size:13px;
+}
+
+.custom-modal-body{
+    padding:25px 26px 26px;
+}
+
+.custom-option-group{
+    margin-bottom:22px;
+}
+
+.custom-option-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+    color:var(--deep);
+    font-size:15px;
+    font-weight:1000;
+}
+
+.custom-options{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.custom-option{
+    position:relative;
+}
+
+.custom-option input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+}
+
+.custom-option label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:52px;
+    padding:12px 14px;
+    border:2px solid #dceaf1;
+    border-radius:14px;
+    background:#f9fdff;
+    color:var(--text);
+    text-align:center;
+    font-size:14px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.custom-option label:hover{
+    border-color:var(--cyan);
+    transform:translateY(-2px);
+}
+
+.custom-option input:checked + label{
+    border-color:var(--pink);
+    background:rgba(255,8,120,.07);
+    color:var(--pink);
+    box-shadow:0 8px 18px rgba(255,8,120,.10);
+}
+
+.custom-beer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:15px;
+    border:2px solid #dceaf1;
+    border-radius:15px;
+    background:#fbfeff;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.custom-beer:hover{
+    border-color:var(--cyan);
+}
+
+.custom-beer-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.custom-beer-icon{
+    width:44px;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:#fff5d7;
+    font-size:22px;
+}
+
+.custom-beer-name{
+    color:var(--deep);
+    font-weight:1000;
+}
+
+.custom-beer-price{
+    margin-top:3px;
+    color:var(--gray);
+    font-size:12px;
+}
+
+.custom-switch{
+    width:50px;
+    height:28px;
+    padding:3px;
+    border-radius:30px;
+    background:#d8e6ed;
+    transition:.25s;
+}
+
+.custom-switch::after{
+    content:"";
+    display:block;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 2px 6px rgba(0,0,0,.18);
+    transition:.25s;
+}
+
+.custom-beer.selected{
+    border-color:var(--yellow);
+    background:#fffaf0;
+}
+
+.custom-beer.selected .custom-switch{
+    background:var(--yellow);
+}
+
+.custom-beer.selected .custom-switch::after{
+    transform:translateX(22px);
+}
+
+.custom-modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:4px;
+}
+
+.custom-modal-button{
+    border:none;
+    padding:15px;
+    border-radius:14px;
+    font-weight:1000;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.custom-modal-cancel{
+    background:#edf5f8;
+    color:var(--text);
+}
+
+.custom-modal-confirm{
+    background:linear-gradient(135deg,var(--pink),#ff4a9d);
+    color:white;
+    box-shadow:0 10px 22px rgba(255,8,120,.22);
+}
+
+.custom-modal-button:hover{
+    transform:translateY(-3px);
+}
+
+@media(max-width:600px){
+    .custom-modal{
+        padding:12px;
+    }
+
+    .custom-modal-header{
+        padding:20px 20px 15px;
+    }
+
+    .custom-modal-body{
+        padding:20px;
+    }
+
+    .custom-options{
+        grid-template-columns:1fr;
+    }
+
+    .custom-modal-actions{
+        grid-template-columns:1fr;
+    }
+}
+
+
+/* =========================================================
+   BEBIDAS
+========================================================= */
+
+.beverage-grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.beverage-card{
+    background:white;
+    border-radius:22px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:16px;
+}
+
+.beverage-icon{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    background:#e9fbff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+}
+
+.beverage-info h3{margin-bottom:5px;}
+.beverage-info p{color:var(--gray);font-size:14px;}
+.beverage-price{font-weight:1000;font-size:20px;white-space:nowrap;}
+.beverage-add{
+    grid-column:2 / 4;
+    border:0;
+    border-radius:13px;
+    padding:12px 16px;
+    background:linear-gradient(135deg,var(--pink),#ff4a9d);
+    color:white;
+    font-weight:900;
+    cursor:pointer;
+}
+
+@media(max-width:900px){
+    .beverage-grid{grid-template-columns:1fr;}
+}
+
+
+/* ESTADO PRÓXIMAMENTE */
+.product .add-button:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+    filter:saturate(.7);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .products{
+        grid-template-columns:1fr;
+
+        max-width:500px;
+    }
+
+    .order-container{
+        grid-template-columns:1fr;
+
+        max-width:650px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .shark{
+        font-size:70px;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .navbar{
+        height:65px;
+
+        padding:
+            0 18px;
+    }
+
+    .logo-nav span{
+        display:none;
+    }
+
+    .hero{
+        padding-top:95px;
+        padding-bottom:150px;
+    }
+
+    .hero-logo{
+        width:300px;
+    }
+
+    .hero-tag{
+        margin-top:14px;
+
+        padding:
+            9px
+            17px;
+
+        font-size:10px;
+
+        letter-spacing:3px;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .hero-description{
+        font-size:15px;
+    }
+
+    .hero-button{
+        padding:
+            15px
+            20px;
+
+        font-size:13px;
+    }
+
+    .shark{
+        font-size:55px;
+
+        top:50%;
+    }
+
+    .fish{
+        font-size:25px;
+    }
+
+    .fish.big{
+        font-size:32px;
+    }
+
+    .shrimp{
+        font-size:25px;
+    }
+
+    .background-octopus{
+        font-size:38px;
+    }
+
+    .menu-section,
+    .order-section{
+        padding:
+            80px
+            16px;
+    }
+
+    .product-image-box{
+        height:250px;
+    }
+
+    .ocean-message{
+        padding:
+            60px
+            20px;
+    }
+}
+
+
+/* =========================================================
+   REDUCIR ANIMACIONES
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms !important;
+
+        animation-iteration-count:1 !important;
+
+        scroll-behavior:auto !important;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar" id="navbar">
+
+    <a href="#inicio" class="logo-nav">
+
+        <img
+            src="logo.png"
+            alt="Pulso Marino"
+        >
+
+        <span>
+            PULSO MARINO
+        </span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="#inicio">
+            Inicio
+        </a>
+
+        <a href="#ceviches">
+            Ceviches
+        </a>
+
+        <a href="#pedido">
+            Mi pedido
+        </a>
+
+    </div>
+
+
+    <button
+        class="cart-nav"
+        onclick="abrirCarrito()"
+        aria-label="Abrir carrito"
+    >
+
+        🛒
+
+        <span
+            class="cart-number"
+            id="cartNumber"
+        >
+            0
+        </span>
+
+    </button>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section
+    class="hero"
+    id="inicio"
+>
+
+
+    <div class="sun-rays"></div>
+
+    <div class="ocean-depth"></div>
+
+
+    <!-- =====================================================
+         BURBUJAS
+    ====================================================== -->
+
+    <div class="bubbles">
+
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+        <span class="bubble"></span>
+
+    </div>
+
+
+    <!-- =====================================================
+         ANIMALES DEL FONDO
+    ====================================================== -->
+
+    <div class="sea-creatures">
+
+        <span class="fish">
+            🐟
+        </span>
+
+        <span class="fish big">
+            🐠
+        </span>
+
+        <span class="fish small">
+            🐟
+        </span>
+
+        <span class="fish">
+            🐠
+        </span>
+
+        <span class="fish big">
+            🐟
+        </span>
+
+        <span class="fish small">
+            🐠
+        </span>
+
+        <span class="fish">
+            🐟
+        </span>
+
+        <span class="fish small">
+            🐠
+        </span>
+
+        <span class="fish big">
+            🐟
+        </span>
+
+        <span class="fish small">
+            🐠
+        </span>
+
+        <span class="fish">
+            🐟
+        </span>
+
+
+        <span class="shrimp">
+            🦐
+        </span>
+
+        <span class="shrimp">
+            🦐
+        </span>
+
+        <span class="shrimp">
+            🦐
+        </span>
+
+    </div>
+
+
+    <!-- =====================================================
+         PULPOS DE FONDO
+    ====================================================== -->
+
+    <div class="background-octopus octopus-one">
+        🐙
+    </div>
+
+    <div class="background-octopus octopus-two">
+        🐙
+    </div>
+
+
+    <!-- =====================================================
+         TIBURÓN
+    ====================================================== -->
+
+    <div
+        class="shark"
+        id="shark"
+    >
+        🦈
+    </div>
+
+    <div class="shark-shadow"></div>
+
+
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
+
+    <div class="hero-content">
+
+
+        <img
+            src="logo.png"
+            alt="Pulso Marino"
+            class="hero-logo"
+        >
+
+
+        <!-- FRASE AHORA DEBAJO DEL LOGO -->
+
+        <div class="hero-tag">
+
+            SABOR QUE VIENE DEL MAR
+
+        </div>
+
+
+        <h1>
+
+            FRESCURA QUE
+
+            <span>
+                SE SIENTE
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Ceviches preparados al momento,
+            llenos de frescura, sabor y ese
+            toque que hace que quieras volver
+            por otro bocado.
+
+        </p>
+
+
+        <a
+            href="#ceviches"
+            class="hero-button"
+        >
+
+            🦐
+            VER NUESTROS CEVICHES
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         OLAS
+    ====================================================== -->
+
+    <div class="hero-waves">
+
+        <div class="wave wave-1"></div>
+
+        <div class="wave wave-2"></div>
+
+        <div class="wave wave-3"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MENÚ
+========================================================= -->
+
+<section
+    class="menu-section"
+    id="ceviches"
+>
+
+
+    <div class="section-heading">
+
+        <div class="section-label">
+
+            🌊 DESDE LAS PROFUNDIDADES
+
+        </div>
+
+
+        <h2>
+
+            Elige tu
+
+            <span>
+                ceviche
+            </span>
+
+        </h2>
+
+
+        <p>
+
+            Tres formas de disfrutar el sabor
+            del mar. Elige tu favorito,
+            agrégalo al carrito y prepara tu pedido.
+
+        </p>
+
+    </div>
+
+
+    <div class="products">
+
+
+        <!-- CEVICHE 1 -->
+
+        <article class="product reveal">
+
+            <div class="product-image-box">
+
+                <div class="product-number">
+                    01
+                </div>
+
+                <div class="product-badge">
+                    🔥 FAVORITO
+                </div>
+
+                <img
+                    src="ceviche1.png"
+                    alt="Bocado de Camarón"
+                    class="product-image"
+                >
+
+            </div>
+
+
+            <div class="product-content">
+
+                <h3>
+                    Bocado de Camarón
+                </h3>
+
+                <p>
+
+                    Fresco, cítrico y lleno
+                    de sabor. Un bocado
+                    perfecto para comenzar
+                    tu aventura marina.
+
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <div class="product-price">
+                        Q35
+                    </div>
+
+                    <button
+                        class="add-button"
+                        onclick="abrirPersonalizacion('Bocado de Camarón',35)"
+                    >
+
+                        🛒 AGREGAR
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- CEVICHE 2 -->
+
+        <article class="product reveal">
+
+            <div class="product-image-box">
+
+                <div class="product-number">
+                    02
+                </div>
+
+                <div
+                    class="product-badge"
+                    style="
+                        background:#00c9e8;
+                        color:white;
+                    "
+                >
+                    ⭐ ESPECIAL
+                </div>
+
+                <img
+                    src="ceviche2.png"
+                    alt="Deleites del Océano"
+                    class="product-image"
+                >
+
+            </div>
+
+
+            <div class="product-content">
+
+                <h3>
+                    Deleites del Océano
+                </h3>
+
+                <p>
+
+                    Una mezcla especial
+                    inspirada en los sabores
+                    que esconde el océano.
+
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <div class="product-price">
+                        Q45
+                    </div>
+
+                    <button
+                        class="add-button"
+                        onclick="abrirPersonalizacion('Deleites del Océano',45)"
+                    >
+
+                        🛒 AGREGAR
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- CEVICHE 3 -->
+
+        <article class="product reveal">
+
+            <div class="product-image-box">
+
+                <div class="product-number">
+                    03
+                </div>
+
+                <div
+                    class="product-badge"
+                    style="
+                        background:#ffd21c;
+                        color:#001b44;
+                    "
+                >
+                    🌊 PRÓXIMAMENTE
+                </div>
+
+                <img
+                    src="ceviche3.png"
+                    alt="Poseidón"
+                    class="product-image"
+                >
+
+            </div>
+
+
+            <div class="product-content">
+
+                <h3>
+                    Poseidón
+                </h3>
+
+                <p>
+
+                    Muy pronto podrás disfrutar
+                    de nuestra creación más especial.
+                    🌊 Una experiencia marina
+                    que estamos preparando para ti.
+
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <div class="product-price">
+                        Q55
+                    </div>
+
+                    <button
+                        class="add-button"
+                        type="button"
+                        disabled
+                        style="opacity:.65; cursor:not-allowed;"
+                    >
+
+                        🔒 PRÓXIMAMENTE
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     BEBIDAS
+========================================================= -->
+
+<section class="menu-section beverages-section" id="bebidas">
+
+    <div class="section-heading">
+        <div class="section-label">🥤 BEBIDAS ADICIONALES</div>
+        <h2>Elige tus <span>bebidas</span></h2>
+        <p>Agrega una o varias bebidas. Puedes cambiar la cantidad de cada bebida por separado en tu pedido.</p>
+    </div>
+
+    <div class="beverage-grid">
+
+        <article class="beverage-card">
+            <div class="beverage-icon">🍺</div>
+            <div class="beverage-info"><h3>Cerveza</h3><p>Refrescante para acompañar tu ceviche.</p></div>
+            <div class="beverage-price">Q10</div>
+            <button class="beverage-add" onclick="agregarBebida('Cerveza',10,'🍺')">+ AGREGAR</button>
+        </article>
+
+        <article class="beverage-card">
+            <div class="beverage-icon">🥤</div>
+            <div class="beverage-info"><h3>Pepsi</h3><p>Bebida fría.</p></div>
+            <div class="beverage-price">Q6</div>
+            <button class="beverage-add" onclick="agregarBebida('Pepsi',6,'🥤')">+ AGREGAR</button>
+        </article>
+
+        <article class="beverage-card">
+            <div class="beverage-icon">🥤</div>
+            <div class="beverage-info"><h3>Coca-Cola</h3><p>Bebida fría.</p></div>
+            <div class="beverage-price">Q6</div>
+            <button class="beverage-add" onclick="agregarBebida('Coca-Cola',6,'🥤')">+ AGREGAR</button>
+        </article>
+
+        <article class="beverage-card">
+            <div class="beverage-icon">🍊</div>
+            <div class="beverage-info"><h3>Orange</h3><p>Bebida fría.</p></div>
+            <div class="beverage-price">Q6</div>
+            <button class="beverage-add" onclick="agregarBebida('Orange',6,'🍊')">+ AGREGAR</button>
+        </article>
+
+        <article class="beverage-card">
+            <div class="beverage-icon">🧃</div>
+            <div class="beverage-info"><h3>Jugo Del Frutal</h3><p>Jugo para acompañar tu pedido.</p></div>
+            <div class="beverage-price">Q8</div>
+            <button class="beverage-add" onclick="agregarBebida('Jugo Del Frutal',8,'🧃')">+ AGREGAR</button>
+        </article>
+
+    </div>
+</section>
+
+
+<!-- =========================================================
+     FRASE
+========================================================= -->
+
+<section class="ocean-message">
+
+    <h2>
+
+        El mar en un bocado,
+
+        <span>
+            la frescura en cada ceviche.
+        </span>
+
+    </h2>
+
+
+    <p>
+
+        En Pulso Marino creemos que un buen ceviche
+        no solamente se come... se disfruta.
+
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     PEDIDO
+========================================================= -->
+
+<section
+    class="order-section"
+    id="pedido"
+>
+
+    <div class="section-heading">
+
+        <div class="section-label">
+            🦐 LISTO PARA ORDENAR
+        </div>
+
+        <h2>
+
+            Prepara tu
+
+            <span>
+                pedido
+            </span>
+
+        </h2>
+
+        <p>
+
+            Revisa tu carrito, completa tus datos
+            y envíanos el pedido directamente
+            por WhatsApp.
+
+        </p>
+
+    </div>
+
+
+    <div class="order-container">
+
+
+        <div class="order-card">
+
+            <div class="order-title">
+
+                🛒 TU PEDIDO
+
+            </div>
+
+
+            <div
+                class="order-body"
+                id="pedidoLista"
+            >
+
+                <div class="empty-cart">
+
+                    <div class="empty-cart-icon">
+                        🦐
+                    </div>
+
+                    <strong>
+                        Tu pedido está vacío
+                    </strong>
+
+                    <p style="margin-top:8px;">
+                        Agrega un ceviche
+                        para comenzar.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="order-card">
+
+            <div class="order-title">
+
+                📦 DATOS DE ENTREGA
+
+            </div>
+
+
+            <div class="order-body">
+
+
+                <div class="form-group">
+
+                    <label>
+                        👤 Tu nombre
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        placeholder="Escribe tu nombre"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        📍 Dirección
+                    </label>
+
+                    <input
+                        type="text"
+                        id="direccion"
+                        placeholder="¿Dónde entregamos?"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        📌 Referencia
+                    </label>
+
+                    <textarea
+                        id="referencia"
+                        placeholder="Ejemplo: casa azul, frente al parque..."
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    class="whatsapp-button"
+                    onclick="enviarPedido()"
+                >
+
+                    💬 ENVIAR PEDIDO POR WHATSAPP
+
+                </button>
+
+
+                <div class="whatsapp-info">
+
+                    WhatsApp:
+                    <strong>
+                        3836-3797
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <img
+        src="logo.png"
+        alt="Pulso Marino"
+        class="footer-logo"
+    >
+
+    <h3>
+        PULSO MARINO
+    </h3>
+
+    <p class="footer-slogan">
+        Del mar a tu mesa. 🦐
+    </p>
+
+    <a
+        href="https://wa.me/50238363797"
+        target="_blank"
+        class="footer-whatsapp"
+    >
+
+        💬 WhatsApp 3836-3797
+
+    </a>
+
+    <div class="footer-bottom">
+
+        © 2026 Pulso Marino
+        ·
+        Frescura que se siente.
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     OVERLAY
+========================================================= -->
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="cerrarCarrito()"
+></div>
+
+
+<!-- =========================================================
+     CARRITO LATERAL
+========================================================= -->
+
+<aside
+    class="cart-panel"
+    id="cartPanel"
+>
+
+    <div class="cart-panel-header">
+
+        <h2>
+            🛒 Tu carrito
+        </h2>
+
+        <button
+            class="close-cart"
+            onclick="cerrarCarrito()"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <div id="carritoLateral">
+
+        <div class="empty-cart">
+
+            <div class="empty-cart-icon">
+                🦐
+            </div>
+
+            Tu carrito está vacío.
+
+        </div>
+
+    </div>
+
+
+    <div class="order-total">
+
+        <span>
+            TOTAL
+        </span>
+
+        <span id="totalLateral">
+            Q0
+        </span>
+
+    </div>
+
+
+    <button
+        class="whatsapp-button"
+        onclick="
+            cerrarCarrito();
+
+            document
+            .getElementById('pedido')
+            .scrollIntoView({
+                behavior:'smooth'
+            });
+        "
+    >
+
+        📦 CONTINUAR PEDIDO
+
+    </button>
+
+</aside>
+
+
+
+<!-- =========================================================
+     MODAL DE PERSONALIZACIÓN
+========================================================= -->
+
+<div class="custom-modal" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
+
+    <div class="custom-modal-card">
+
+        <div class="custom-modal-header">
+            <h3 id="customModalTitle">Personaliza tu ceviche</h3>
+            <p>Elige cómo quieres disfrutarlo antes de agregarlo al carrito.</p>
+        </div>
+
+        <div class="custom-modal-body">
+
+            <div class="custom-option-group">
+
+                <div class="custom-option-title">
+                    🌿 ¿Qué hierba quieres?
+                </div>
+
+                <div class="custom-options">
+
+                    <div class="custom-option">
+                        <input type="radio" id="hierbaCilantro" name="hierbaModal" value="Cilantro">
+                        <label for="hierbaCilantro">🌿 Cilantro</label>
+                    </div>
+
+                    <div class="custom-option">
+                        <input type="radio" id="hierbaHierbabuena" name="hierbaModal" value="Hierbabuena">
+                        <label for="hierbaHierbabuena">🍃 Hierbabuena</label>
+                    </div>
+
+                    <div class="custom-option">
+                        <input type="radio" id="hierbaSin" name="hierbaModal" value="Sin hierba">
+                        <label for="hierbaSin">🚫 Sin hierba</label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="custom-option-group">
+
+                <div class="custom-option-title">
+                    🥑 ¿Quieres aguacate?
+                </div>
+
+                <div class="custom-options">
+
+                    <div class="custom-option">
+                        <input type="radio" id="aguacateSi" name="aguacateModal" value="Sí">
+                        <label for="aguacateSi">🥑 Sí, con aguacate</label>
+                    </div>
+
+                    <div class="custom-option">
+                        <input type="radio" id="aguacateNo" name="aguacateModal" value="No">
+                        <label for="aguacateNo">❌ No, sin aguacate</label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="custom-option-group">
+
+                <div class="custom-option-title">
+                    🍞 ¿Qué acompañante quieres?
+                </div>
+
+                <div class="custom-options">
+                    <div class="custom-option">
+                        <input type="radio" id="acompananteTostada" name="acompananteModal" value="Tostada">
+                        <label for="acompananteTostada">🍞 Tostada</label>
+                    </div>
+                    <div class="custom-option">
+                        <input type="radio" id="acompananteGalleta" name="acompananteModal" value="Galleta">
+                        <label for="acompananteGalleta">🍪 Galleta</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="custom-option-group">
+
+                <div class="custom-option-title">
+                    🥒 ¿Quieres pepino?
+                </div>
+
+                <div class="custom-options">
+                    <div class="custom-option">
+                        <input type="radio" id="pepinoSi" name="pepinoModal" value="Sí">
+                        <label for="pepinoSi">🥒 Sí, con pepino</label>
+                    </div>
+                    <div class="custom-option">
+                        <input type="radio" id="pepinoNo" name="pepinoModal" value="No">
+                        <label for="pepinoNo">❌ No, sin pepino</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="custom-modal-actions">
+
+                <button
+                    type="button"
+                    class="custom-modal-button custom-modal-cancel"
+                    onclick="cerrarPersonalizacion()"
+                >
+                    CANCELAR
+                </button>
+
+                <button
+                    type="button"
+                    class="custom-modal-button custom-modal-confirm"
+                    onclick="confirmarPersonalizacion()"
+                >
+                    AGREGAR AL CARRITO
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CARRITO
+========================================================= */
+
+let carrito = [];
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        const navbar =
+            document.getElementById("navbar");
+
+        if(window.scrollY > 40){
+
+            navbar.classList.add("scrolled");
+
+        }else{
+
+            navbar.classList.remove("scrolled");
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PRODUCTOS AL HACER SCROLL
+========================================================= */
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if(entry.isIntersecting){
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        observer.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:.15
+        }
+    );
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(
+    element => {
+
+        observer.observe(element);
+
+    }
+);
+
+
+/* =========================================================
+   TIBURÓN COME PECES
+========================================================= */
+
+const shark =
+    document.getElementById("shark");
+
+const peces =
+    document.querySelectorAll(".fish");
+
+let pecesDisponibles =
+    Array.from(peces);
+
+
+/*
+   Después de que aparece el tiburón,
+   algunos peces desaparecen progresivamente.
+*/
+
+setTimeout(
+    () => {
+
+        let contador = 0;
+
+        const comerPez =
+            setInterval(
+                () => {
+
+                    if(
+                        pecesDisponibles.length === 0
+                    ){
+
+                        clearInterval(
+                            comerPez
+                        );
+
+                        return;
+                    }
+
+
+                    const indice =
+                        Math.floor(
+                            Math.random() *
+                            pecesDisponibles.length
+                        );
+
+
+                    const pez =
+                        pecesDisponibles[indice];
+
+
+                    if(pez){
+
+                        pez.classList.add(
+                            "eaten"
+                        );
+
+                        pecesDisponibles.splice(
+                            indice,
+                            1
+                        );
+
+                    }
+
+
+                    contador++;
+
+
+                    if(contador >= 5){
+
+                        clearInterval(
+                            comerPez
+                        );
+
+                    }
+
+                },
+                1200
+            );
+
+    },
+    9000
+);
+
+
+/*
+   Los peces vuelven después de un tiempo
+   para que el océano no quede vacío.
+*/
+
+setInterval(
+    () => {
+
+        document
+        .querySelectorAll(".fish.eaten")
+        .forEach(
+            pez => {
+
+                pez.classList.remove(
+                    "eaten"
+                );
+
+            }
+        );
+
+        pecesDisponibles =
+            Array.from(
+                document.querySelectorAll(".fish")
+            );
+
+    },
+    25000
+);
+
+
+/* =========================================================
+   PERSONALIZACIÓN DEL CEVICHE
+========================================================= */
+
+let productoPendiente = null;
+
+function abrirPersonalizacion(nombre, precio){
+    // Cada ceviche nuevo empieza completamente limpio.
+    productoPendiente = { nombre, precio };
+
+    document.querySelectorAll('input[name="hierbaModal"]').forEach(input => input.checked = false);
+    document.querySelectorAll('input[name="aguacateModal"]').forEach(input => input.checked = false);
+    document.querySelectorAll('input[name="acompananteModal"]').forEach(input => input.checked = false);
+    document.querySelectorAll('input[name="pepinoModal"]').forEach(input => input.checked = false);
+
+    document.getElementById("customModalTitle").textContent = "Personaliza " + nombre;
+    document.getElementById("customModal").classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function cerrarPersonalizacion(){
+    productoPendiente = null;
+    document.getElementById("customModal").classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function confirmarPersonalizacion(){
+    if(!productoPendiente) return;
+
+    const hierbaInput = document.querySelector('input[name="hierbaModal"]:checked');
+    const aguacateInput = document.querySelector('input[name="aguacateModal"]:checked');
+    const acompananteInput = document.querySelector('input[name="acompananteModal"]:checked');
+    const pepinoInput = document.querySelector('input[name="pepinoModal"]:checked');
+
+    if(!hierbaInput){ alert("🌿 Elige cilantro, hierbabuena o sin hierba."); return; }
+    if(!aguacateInput){ alert("🥑 Indica si quieres aguacate."); return; }
+    if(!acompananteInput){ alert("🍞 Elige tostada o galleta."); return; }
+    if(!pepinoInput){ alert("🥒 Indica si quieres pepino."); return; }
+
+    carrito.push({
+        tipo: "ceviche",
+        nombre: productoPendiente.nombre,
+        precio: productoPendiente.precio,
+        hierba: hierbaInput.value,
+        aguacate: aguacateInput.value,
+        acompanante: acompananteInput.value,
+        pepino: pepinoInput.value,
+        cantidad: 1
+    });
+
+    productoPendiente = null;
+    document.getElementById("customModal").classList.remove("active");
+    document.body.style.overflow = "";
+    actualizarTodo();
+    abrirCarrito();
+
+    const contador = document.getElementById("cartNumber");
+    contador.classList.remove("bump");
+    void contador.offsetWidth;
+    contador.classList.add("bump");
+    if(navigator.vibrate) navigator.vibrate(60);
+}
+
+/* =========================================================
+   BEBIDAS
+========================================================= */
+
+function agregarBebida(nombre, precio, emoji){
+    const existente = carrito.find(producto => producto.tipo === "bebida" && producto.nombre === nombre);
+
+    if(existente){
+        existente.cantidad += 1;
+    }else{
+        carrito.push({
+            tipo: "bebida",
+            nombre,
+            precio,
+            emoji,
+            cantidad: 1
+        });
+    }
+
+    actualizarTodo();
+    abrirCarrito();
+}
+
+/* =========================================================
+   CAMBIAR CANTIDAD
+========================================================= */
+
+
+function cambiarCantidad(
+    index,
+    cambio
+){
+
+    if(!carrito[index]){
+        return;
+    }
+
+
+    carrito[index].cantidad +=
+        cambio;
+
+
+    if(
+        carrito[index].cantidad <= 0
+    ){
+
+        carrito.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    actualizarTodo();
+
+}
+
+
+/* =========================================================
+   ELIMINAR
+========================================================= */
+
+function eliminarProducto(index){
+
+    carrito.splice(
+        index,
+        1
+    );
+
+    actualizarTodo();
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR
+========================================================= */
+
+function actualizarTodo(){
+
+    actualizarContador();
+
+    actualizarPedido();
+
+    actualizarCarrito();
+
+}
+
+
+/* =========================================================
+   CONTADOR
+========================================================= */
+
+function actualizarContador(){
+
+    let cantidad = 0;
+
+
+    carrito.forEach(
+        producto => {
+
+            cantidad +=
+                producto.cantidad;
+
+        }
+    );
+
+
+    document
+    .getElementById(
+        "cartNumber"
+    )
+    .textContent =
+        cantidad;
+
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+function calcularTotal(){
+
+    return carrito.reduce(
+        (
+            total,
+            producto
+        ) => {
+
+            return total +
+                (
+                    producto.precio *
+                    producto.cantidad
+                );
+
+        },
+        0
+    );
+
+}
+
+
+/* =========================================================
+   PEDIDO
+========================================================= */
+
+function crearDetalleProducto(producto){
+    if(producto.tipo === "bebida") return `${producto.emoji || "🥤"} ${producto.nombre}`;
+    return `🌿 ${producto.hierba} · 🥑 ${producto.aguacate} · 🍞 ${producto.acompanante} · 🥒 ${producto.pepino}`;
+}
+
+function crearControlesProducto(index){
+    return `
+        <div class="cart-controls">
+            <button class="qty-button" onclick="cambiarCantidad(${index},-1)">−</button>
+            <strong>${carrito[index].cantidad}</strong>
+            <button class="qty-button" onclick="cambiarCantidad(${index},1)">+</button>
+        </div>
+        <button class="qty-button delete-button" onclick="eliminarProducto(${index})">×</button>`;
+}
+
+function renderizarLista(contenedor){
+    contenedor.innerHTML = "";
+
+    carrito.forEach((producto,index) => {
+        const subtotal = producto.precio * producto.cantidad;
+        const item = document.createElement("div");
+        item.className = "cart-item";
+        item.innerHTML = `
+            <div>
+                <div class="cart-item-name">${producto.tipo === "bebida" ? (producto.emoji || "🥤") : "🦐"} ${producto.nombre}</div>
+                <div class="cart-item-price">Q${producto.precio} cada uno</div>
+                <div class="cart-item-price" style="margin-top:7px;">${crearDetalleProducto(producto)}</div>
+            </div>
+            ${crearControlesProducto(index)}
+            <div class="item-total">Q${subtotal}</div>
+        `;
+        contenedor.appendChild(item);
+    });
+
+    const totalDiv = document.createElement("div");
+    totalDiv.className = "order-total";
+    totalDiv.innerHTML = `<span>TOTAL</span><span>Q${calcularTotal()}</span>`;
+    contenedor.appendChild(totalDiv);
+}
+
+function actualizarPedido(){
+    const contenedor = document.getElementById("pedidoLista");
+    if(carrito.length === 0){
+        contenedor.innerHTML = `
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🦐</div>
+                <strong>Tu pedido está vacío</strong>
+                <p style="margin-top:8px;">Agrega un ceviche o una bebida para comenzar.</p>
+            </div>`;
+        return;
+    }
+    renderizarLista(contenedor);
+}
+
+/* =========================================================
+   CARRITO LATERAL
+========================================================= */
+
+function actualizarCarrito(){
+    const contenedor = document.getElementById("carritoLateral");
+    const total = document.getElementById("totalLateral");
+
+    if(carrito.length === 0){
+        contenedor.innerHTML = `
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🦐</div>
+                Tu carrito está vacío.
+            </div>`;
+        total.textContent = "Q0";
+        return;
+    }
+
+    renderizarLista(contenedor);
+    total.textContent = "Q" + calcularTotal();
+}
+
+
+/* =========================================================
+   ABRIR CARRITO
+========================================================= */
+
+function abrirCarrito(){
+
+    document
+    .getElementById("cartPanel")
+    .classList.add("active");
+
+
+    document
+    .getElementById("overlay")
+    .classList.add("active");
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =========================================================
+   CERRAR
+========================================================= */
+
+function cerrarCarrito(){
+
+    document
+    .getElementById("cartPanel")
+    .classList.remove("active");
+
+
+    document
+    .getElementById("overlay")
+    .classList.remove("active");
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+function enviarPedido(){
+    if(carrito.length === 0){
+        alert("🦐 Primero agrega al menos un ceviche o una bebida a tu pedido.");
+        document.getElementById("ceviches").scrollIntoView({behavior:"smooth"});
+        return;
+    }
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const direccion = document.getElementById("direccion").value.trim();
+    const referencia = document.getElementById("referencia").value.trim();
+
+    if(!nombre){
+        alert("👤 Por favor escribe tu nombre.");
+        document.getElementById("nombre").focus();
+        return;
+    }
+    if(!direccion){
+        alert("📍 Por favor escribe tu dirección.");
+        document.getElementById("direccion").focus();
+        return;
+    }
+    if(!referencia){
+        alert("📌 Por favor escribe una referencia.");
+        document.getElementById("referencia").focus();
+        return;
+    }
+
+    let mensaje =
+        "🌊 *PULSO MARINO* 🌊\n" +
+        "🦐 *NUEVO PEDIDO* 🦐\n\n" +
+        "👤 *DATOS DEL CLIENTE*\n" +
+        "Nombre: " + nombre + "\n" +
+        "📍 Dirección: " + direccion + "\n" +
+        "📌 Referencia: " + referencia + "\n\n" +
+        "🧾 *PEDIDO*\n\n";
+
+    carrito.forEach(producto => {
+        const subtotal = producto.precio * producto.cantidad;
+        const icono = producto.tipo === "bebida"
+            ? (producto.emoji || "🥤")
+            : "🦐";
+
+        mensaje += icono + " *" + producto.nombre + "*\n";
+        mensaje += "🔢 Cantidad: " + producto.cantidad + "\n";
+
+        if(producto.tipo === "ceviche"){
+            mensaje += "🌿 Hierba: " + producto.hierba + "\n";
+            mensaje += "🥑 Aguacate: " + producto.aguacate + "\n";
+            mensaje += "🍞 Acompañante: " + producto.acompanante + "\n";
+            mensaje += "🥒 Pepino: " + producto.pepino + "\n";
+        }
+
+        mensaje += "💵 Precio unitario: Q" + producto.precio + "\n";
+        mensaje += "💰 Subtotal: Q" + subtotal + "\n\n";
+    });
+
+    mensaje += "💰 *TOTAL: Q" + calcularTotal() + "*\n\n";
+    mensaje += "🙏 ¡Hola! Quiero realizar este pedido. Gracias. 🌊🦐";
+
+    // encodeURIComponent conserva correctamente tildes, ñ, saltos de línea y emojis.
+    const numero = "50238363797";
+    const url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
+
+    window.open(url, "_blank", "noopener,noreferrer");
+}
+
+/* Cerrar modal al hacer clic fuera de la tarjeta */
+document
+    .getElementById("customModal")
+    .addEventListener(
+        "click",
+        event => {
+
+            if(event.target.id === "customModal"){
+                cerrarPersonalizacion();
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+actualizarTodo();
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Escape"){
+
+            cerrarCarrito();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
