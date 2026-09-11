@@ -1,3 +1,9 @@
+Sí. Te paso **todo el código completo ya corregido**, con la lógica exacta:
+
+**Q35 → personalizas → aparece “Llévate otro por Q25 más” → Sí/No → bebidas.**
+
+Además, la oferta **no se puede repetir sobre el mismo ceviche**: para obtener otro Q25, primero tiene que agregarse otro ceviche normal de Q35.
+
 ```html
 <!DOCTYPE html>
 <html lang="es">
@@ -830,7 +836,7 @@ textarea{
 
 
 /* =========================================================
-   HERO
+   HERO CONTENIDO
 ========================================================= */
 
 .hero-content{
@@ -876,7 +882,6 @@ textarea{
 }
 
 .hero-tag{
-
     display:inline-flex;
 
     align-items:center;
@@ -1086,74 +1091,6 @@ textarea{
         14s
         ease-in-out
         infinite;
-}
-
-
-/* =========================================================
-   MENU
-========================================================= */
-
-.menu-section{
-    position:relative;
-
-    padding:
-        110px
-        20px;
-
-    background:
-        linear-gradient(
-            #eafaff,
-            #ffffff
-        );
-
-    overflow:hidden;
-}
-
-.section-heading{
-    text-align:center;
-
-    max-width:700px;
-
-    margin:
-        0 auto
-        60px;
-}
-
-.section-label{
-    color:var(--pink);
-
-    font-size:12px;
-
-    font-weight:1000;
-
-    letter-spacing:5px;
-}
-
-.section-heading h2{
-    margin-top:10px;
-
-    color:var(--deep);
-
-    font-size:
-        clamp(
-            36px,
-            5vw,
-            55px
-        );
-
-    font-weight:1000;
-}
-
-.section-heading h2 span{
-    color:var(--pink);
-}
-
-.section-heading p{
-    margin-top:15px;
-
-    color:var(--gray);
-
-    line-height:1.6;
 }
 
 
@@ -1388,6 +1325,74 @@ textarea{
 
 
 /* =========================================================
+   SECCIONES
+========================================================= */
+
+.menu-section{
+    position:relative;
+
+    padding:
+        110px
+        20px;
+
+    background:
+        linear-gradient(
+            #eafaff,
+            #ffffff
+        );
+
+    overflow:hidden;
+}
+
+.section-heading{
+    text-align:center;
+
+    max-width:700px;
+
+    margin:
+        0 auto
+        60px;
+}
+
+.section-label{
+    color:var(--pink);
+
+    font-size:12px;
+
+    font-weight:1000;
+
+    letter-spacing:5px;
+}
+
+.section-heading h2{
+    margin-top:10px;
+
+    color:var(--deep);
+
+    font-size:
+        clamp(
+            36px,
+            5vw,
+            55px
+        );
+
+    font-weight:1000;
+}
+
+.section-heading h2 span{
+    color:var(--pink);
+}
+
+.section-heading p{
+    margin-top:15px;
+
+    color:var(--gray);
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
    BEBIDAS
 ========================================================= */
 
@@ -1469,7 +1474,9 @@ textarea{
 
     border-radius:13px;
 
-    padding:12px 16px;
+    padding:
+        12px
+        16px;
 
     background:
         linear-gradient(
@@ -1487,7 +1494,7 @@ textarea{
 
 
 /* =========================================================
-   OCEAN MESSAGE
+   FRASE
 ========================================================= */
 
 .ocean-message{
@@ -1675,6 +1682,11 @@ textarea{
     font-size:18px;
 
     cursor:pointer;
+}
+
+.qty-button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
 .delete-button{
@@ -1884,6 +1896,7 @@ textarea{
     display:flex;
 
     justify-content:space-between;
+
     align-items:center;
 
     margin-bottom:25px;
@@ -1910,106 +1923,7 @@ textarea{
 
 
 /* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-    position:relative;
-
-    padding:
-        80px
-        20px
-        35px;
-
-    text-align:center;
-
-    color:white;
-
-    background:
-        linear-gradient(
-            180deg,
-            #001b44,
-            #000e29
-        );
-
-    overflow:hidden;
-}
-
-.footer-logo{
-    width:95px;
-    height:95px;
-
-    object-fit:contain;
-
-    position:relative;
-    z-index:2;
-}
-
-footer h3{
-    position:relative;
-    z-index:2;
-
-    margin-top:10px;
-
-    color:var(--yellow);
-
-    font-size:23px;
-}
-
-.footer-slogan{
-    position:relative;
-    z-index:2;
-
-    margin-top:10px;
-
-    color:
-        rgba(255,255,255,.8);
-
-    font-size:14px;
-}
-
-.footer-whatsapp{
-    position:relative;
-    z-index:2;
-
-    display:inline-block;
-
-    margin-top:20px;
-
-    padding:12px 22px;
-
-    border-radius:30px;
-
-    background:var(--green);
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:900;
-}
-
-.footer-bottom{
-    position:relative;
-    z-index:2;
-
-    margin-top:30px;
-
-    padding-top:20px;
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.1);
-
-    color:
-        rgba(255,255,255,.5);
-
-    font-size:12px;
-}
-
-
-/* =========================================================
-   MODAL PERSONALIZACION
+   MODAL CEVICHE
 ========================================================= */
 
 .custom-modal{
@@ -2165,6 +2079,7 @@ footer h3{
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     min-height:52px;
@@ -2326,32 +2241,64 @@ footer h3{
 
 
 /* =========================================================
-   INDICADOR
+   BOTONES MODAL
 ========================================================= */
 
-.step-indicator{
-    display:inline-flex;
+.modal-actions{
+    display:grid;
 
-    padding:
-        7px
-        12px;
+    grid-template-columns:
+        1fr
+        1fr;
 
-    border-radius:20px;
+    gap:10px;
 
-    background:#eafaff;
+    margin-top:24px;
+}
 
-    color:var(--blue);
+.modal-button{
+    border:none;
 
-    font-size:11px;
+    padding:15px;
+
+    border-radius:14px;
 
     font-weight:1000;
 
-    margin-bottom:18px;
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.modal-cancel{
+    background:#edf5f8;
+
+    color:var(--text);
+}
+
+.modal-confirm{
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink),
+            #ff4a9d
+        );
+
+    color:white;
+
+    box-shadow:
+        0 10px 22px
+        rgba(255,8,120,.22);
+}
+
+.modal-button:hover{
+    transform:
+        translateY(-3px);
 }
 
 
 /* =========================================================
-   OFERTA SEGUNDO CEVICHE
+   ANUNCIO "OTRO POR Q25"
 ========================================================= */
 
 .offer-modal{
@@ -2370,7 +2317,7 @@ footer h3{
     padding:20px;
 
     background:
-        rgba(0,15,40,.75);
+        rgba(0,15,40,.78);
 
     backdrop-filter:blur(8px);
 
@@ -2388,31 +2335,33 @@ footer h3{
 }
 
 .offer-card{
+    position:relative;
+
     width:
         min(
-            450px,
+            460px,
             94vw
         );
 
+    overflow:hidden;
+
     background:white;
 
-    border-radius:28px;
-
-    overflow:hidden;
+    border-radius:30px;
 
     box-shadow:
         0 30px 80px
         rgba(0,0,0,.35);
 
-    text-align:center;
-
     transform:
-        scale(.88)
+        scale(.85)
         translateY(25px);
 
     transition:
         .4s
         cubic-bezier(.2,.8,.2,1);
+
+    text-align:center;
 }
 
 .offer-modal.active
@@ -2424,14 +2373,14 @@ footer h3{
 
 .offer-header{
     padding:
-        35px
+        36px
         22px
         30px;
 
     background:
         radial-gradient(
             circle at 50% 0%,
-            #18d9ee 0%,
+            #19d9ef 0%,
             #008dc7 42%,
             #003b78 100%
         );
@@ -2440,7 +2389,7 @@ footer h3{
 }
 
 .offer-icon{
-    font-size:48px;
+    font-size:50px;
 }
 
 .offer-small{
@@ -2450,22 +2399,22 @@ footer h3{
 
     font-size:12px;
 
-    letter-spacing:3px;
+    letter-spacing:4px;
 
     font-weight:1000;
 }
 
 .offer-header h2{
-    margin-top:8px;
+    margin-top:10px;
 
     font-size:
         clamp(
-            30px,
+            31px,
             8vw,
-            40px
+            42px
         );
 
-    line-height:1;
+    line-height:.98;
 
     font-weight:1000;
 }
@@ -2475,7 +2424,7 @@ footer h3{
 }
 
 .offer-body{
-    padding:25px;
+    padding:27px 25px 28px;
 }
 
 .offer-body p{
@@ -2489,13 +2438,13 @@ footer h3{
 .offer-saving{
     display:inline-block;
 
-    margin-top:12px;
+    margin-top:13px;
 
     padding:
-        8px
-        13px;
+        9px
+        14px;
 
-    border-radius:20px;
+    border-radius:30px;
 
     background:#fff5d7;
 
@@ -2524,6 +2473,8 @@ footer h3{
     padding:15px 10px;
 
     border-radius:14px;
+
+    font-size:13px;
 
     font-weight:1000;
 
@@ -2595,6 +2546,7 @@ footer h3{
     }
 }
 
+
 @keyframes fishSwim{
 
     0%{
@@ -2633,6 +2585,7 @@ footer h3{
     }
 }
 
+
 @keyframes shrimpSwim{
 
     0%{
@@ -2664,6 +2617,7 @@ footer h3{
     }
 }
 
+
 @keyframes fishEaten{
 
     0%{
@@ -2687,6 +2641,7 @@ footer h3{
             scale(.05);
     }
 }
+
 
 @keyframes sharkSwim{
 
@@ -2749,6 +2704,7 @@ footer h3{
     }
 }
 
+
 @keyframes sharkShadow{
 
     0%{
@@ -2773,6 +2729,7 @@ footer h3{
             translateX(120vw);
     }
 }
+
 
 @keyframes octopusBackground{
 
@@ -2811,6 +2768,7 @@ footer h3{
     }
 }
 
+
 @keyframes logoAppear{
 
     from{
@@ -2830,6 +2788,7 @@ footer h3{
     }
 }
 
+
 @keyframes logoFloat{
 
     0%,100%{
@@ -2842,6 +2801,7 @@ footer h3{
             translateY(-8px);
     }
 }
+
 
 @keyframes fadeUp{
 
@@ -2860,6 +2820,7 @@ footer h3{
     }
 }
 
+
 @keyframes waveMove{
 
     0%,100%{
@@ -2875,6 +2836,7 @@ footer h3{
     }
 }
 
+
 @keyframes rotateLight{
 
     to{
@@ -2883,6 +2845,7 @@ footer h3{
             rotate(360deg);
     }
 }
+
 
 @keyframes cartBump{
 
@@ -3051,7 +3014,7 @@ footer h3{
         grid-template-columns:1fr;
     }
 
-    .custom-modal-actions{
+    .modal-actions{
         grid-template-columns:1fr;
     }
 
@@ -3060,10 +3023,6 @@ footer h3{
     }
 }
 
-
-/* =========================================================
-   REDUCIR ANIMACIONES
-========================================================= */
 
 @media(prefers-reduced-motion:reduce){
 
@@ -3248,11 +3207,16 @@ footer h3{
     </div>
 
 
-    <div class="background-octopus octopus-one">
+    <div
+        class="background-octopus octopus-one"
+    >
         🐙
     </div>
 
-    <div class="background-octopus octopus-two">
+
+    <div
+        class="background-octopus octopus-two"
+    >
         🐙
     </div>
 
@@ -3263,6 +3227,7 @@ footer h3{
     >
         🦈
     </div>
+
 
     <div class="shark-shadow"></div>
 
@@ -3331,7 +3296,7 @@ footer h3{
 
 
 <!-- =========================================================
-     MENU CEVICHES
+     CEVICHES
 ========================================================= -->
 
 <section
@@ -3387,9 +3352,7 @@ footer h3{
 
 
                 <div class="product-badge">
-
                     🔥 FAVORITO
-
                 </div>
 
 
@@ -3785,7 +3748,9 @@ footer h3{
      FRASE
 ========================================================= -->
 
-<section class="ocean-message">
+<section
+    class="ocean-message"
+>
 
     <h2>
 
@@ -3871,9 +3836,11 @@ footer h3{
                         🦐
                     </div>
 
+
                     <strong>
                         Tu pedido está vacío
                     </strong>
+
 
                     <p style="margin-top:8px;">
 
@@ -3907,6 +3874,7 @@ footer h3{
                         👤 Tu nombre
                     </label>
 
+
                     <input
                         type="text"
                         id="nombre"
@@ -3922,6 +3890,7 @@ footer h3{
                         📍 Dirección
                     </label>
 
+
                     <input
                         type="text"
                         id="direccion"
@@ -3936,6 +3905,7 @@ footer h3{
                     <label>
                         📌 Referencia
                     </label>
+
 
                     <textarea
                         id="referencia"
@@ -3984,6 +3954,7 @@ footer h3{
         alt="Pulso Marino"
         class="footer-logo"
     >
+
 
     <h3>
         PULSO MARINO
@@ -4104,7 +4075,7 @@ footer h3{
 
 
 <!-- =========================================================
-     MODAL PERSONALIZACION
+     MODAL DE PERSONALIZACION
 ========================================================= -->
 
 <div
@@ -4123,7 +4094,7 @@ footer h3{
             <h3
                 id="customModalTitle"
             >
-                Personaliza tu ceviche
+                Personaliza tu Mordisco del Mar
             </h3>
 
 
@@ -4140,13 +4111,10 @@ footer h3{
 
 
             <!-- =================================================
-                 PASO CEVICHE
+                 PERSONALIZACION
             ================================================== -->
 
-            <div
-                class="modal-step active"
-                id="stepCeviche"
-            >
+            <div id="stepCeviche">
 
 
                 <div
@@ -4180,7 +4148,10 @@ footer h3{
                                 value="Cilantro"
                             >
 
-                            <label for="hierbaCilantro">
+
+                            <label
+                                for="hierbaCilantro"
+                            >
 
                                 🌿 Cilantro
 
@@ -4198,7 +4169,10 @@ footer h3{
                                 value="Hierbabuena"
                             >
 
-                            <label for="hierbaHierbabuena">
+
+                            <label
+                                for="hierbaHierbabuena"
+                            >
 
                                 🍃 Hierbabuena
 
@@ -4216,7 +4190,10 @@ footer h3{
                                 value="Sin hierba"
                             >
 
-                            <label for="hierbaSin">
+
+                            <label
+                                for="hierbaSin"
+                            >
 
                                 🚫 Sin hierba
 
@@ -4253,7 +4230,10 @@ footer h3{
                                 value="Sí"
                             >
 
-                            <label for="aguacateSi">
+
+                            <label
+                                for="aguacateSi"
+                            >
 
                                 🥑 Sí, con aguacate
 
@@ -4271,7 +4251,10 @@ footer h3{
                                 value="No"
                             >
 
-                            <label for="aguacateNo">
+
+                            <label
+                                for="aguacateNo"
+                            >
 
                                 ❌ No, sin aguacate
 
@@ -4308,7 +4291,10 @@ footer h3{
                                 value="Tostada"
                             >
 
-                            <label for="acompananteTostada">
+
+                            <label
+                                for="acompananteTostada"
+                            >
 
                                 🍞 Tostada
 
@@ -4326,7 +4312,10 @@ footer h3{
                                 value="Galleta"
                             >
 
-                            <label for="acompananteGalleta">
+
+                            <label
+                                for="acompananteGalleta"
+                            >
 
                                 🍪 Galleta
 
@@ -4363,7 +4352,10 @@ footer h3{
                                 value="Sí"
                             >
 
-                            <label for="pepinoSi">
+
+                            <label
+                                for="pepinoSi"
+                            >
 
                                 🥒 Sí, con pepino
 
@@ -4381,7 +4373,10 @@ footer h3{
                                 value="No"
                             >
 
-                            <label for="pepinoNo">
+
+                            <label
+                                for="pepinoNo"
+                            >
 
                                 ❌ No, sin pepino
 
@@ -4395,14 +4390,12 @@ footer h3{
                 </div>
 
 
-                <!-- BOTONES -->
-
-                <div class="custom-modal-actions">
+                <div class="modal-actions">
 
 
                     <button
                         type="button"
-                        class="custom-modal-button custom-modal-cancel"
+                        class="modal-button modal-cancel"
                         onclick="cerrarPersonalizacion()"
                     >
 
@@ -4413,7 +4406,7 @@ footer h3{
 
                     <button
                         type="button"
-                        class="custom-modal-button custom-modal-confirm"
+                        class="modal-button modal-confirm"
                         onclick="continuarDesdeCeviche()"
                     >
 
@@ -4421,17 +4414,17 @@ footer h3{
 
                     </button>
 
+
                 </div>
 
             </div>
 
 
             <!-- =================================================
-                 PASO BEBIDAS
+                 BEBIDAS
             ================================================== -->
 
             <div
-                class="modal-step"
                 id="stepBebidas"
                 style="display:none;"
             >
@@ -4466,8 +4459,8 @@ footer h3{
                         "
                     >
 
-                        Puedes agregar una o varias
-                        bebidas a tu pedido.
+                        Puedes agregar una o varias bebidas
+                        antes de terminar tu pedido.
 
                     </p>
 
@@ -4599,12 +4592,12 @@ footer h3{
                 </div>
 
 
-                <div class="custom-modal-actions">
+                <div class="modal-actions">
 
 
                     <button
                         type="button"
-                        class="custom-modal-button custom-modal-cancel"
+                        class="modal-button modal-cancel"
                         onclick="volverACeviche()"
                     >
 
@@ -4615,7 +4608,7 @@ footer h3{
 
                     <button
                         type="button"
-                        class="custom-modal-button custom-modal-confirm"
+                        class="modal-button modal-confirm"
                         onclick="confirmarBebidas()"
                     >
 
@@ -4654,9 +4647,7 @@ footer h3{
 
 
             <div class="offer-small">
-
                 ¡APROVECHA!
-
             </div>
 
 
@@ -4683,8 +4674,8 @@ footer h3{
 
                 <br><br>
 
-                Puedes llevarte otro por
-                solamente <strong>Q25 más</strong>.
+                Agrega otro por solamente
+                <strong>Q25 más</strong>.
 
             </p>
 
@@ -4984,20 +4975,7 @@ function abrirPersonalizacionNormal(){
     limpiarOpcionesModal();
 
 
-    document
-    .getElementById(
-        "stepCeviche"
-    )
-    .style.display =
-        "block";
-
-
-    document
-    .getElementById(
-        "stepBebidas"
-    )
-    .style.display =
-        "none";
+    mostrarPasoCeviche();
 
 
     document
@@ -5040,7 +5018,92 @@ function abrirPersonalizacionNormal(){
 
 
 /* =========================================================
-   LIMPIAR OPCIONES
+   MOSTRAR PASO CEVICHE
+========================================================= */
+
+function mostrarPasoCeviche(){
+
+    document
+    .getElementById(
+        "stepCeviche"
+    )
+    .style.display =
+        "block";
+
+
+    document
+    .getElementById(
+        "stepBebidas"
+    )
+    .style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   MOSTRAR PASO BEBIDAS
+========================================================= */
+
+function mostrarPasoBebidas(){
+
+    document
+    .getElementById(
+        "stepCeviche"
+    )
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById(
+        "stepBebidas"
+    )
+    .style.display =
+        "block";
+
+
+    document
+    .getElementById(
+        "customModalTitle"
+    )
+    .textContent =
+        "Agrega tus bebidas";
+
+
+    document
+    .getElementById(
+        "customModalSubtitle"
+    )
+    .textContent =
+        "Elige una o varias bebidas para acompañar tu pedido.";
+
+
+    document
+    .getElementById(
+        "bebidaStepIndicator"
+    )
+    .textContent =
+        "PASO 2 · BEBIDAS";
+
+
+    document
+    .getElementById(
+        "customModal"
+    )
+    .classList.add(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =========================================================
+   LIMPIAR MODAL
 ========================================================= */
 
 function limpiarOpcionesModal(){
@@ -5189,16 +5252,16 @@ function continuarDesdeCeviche(){
 
 
     /*
-       El primer ceviche siempre cuesta Q35.
-       El segundo de la oferta cuesta Q25.
+       Q35 para compra normal.
+       Q25 solamente para el segundo
+       ceviche después de aceptar la oferta.
     */
 
     let precioCeviche = 35;
 
 
     if(
-        flujoCompra.modo === "oferta" &&
-        flujoCompra.cevichesCompletados === 1
+        flujoCompra.modo === "oferta"
     ){
 
         precioCeviche = 25;
@@ -5233,8 +5296,8 @@ function continuarDesdeCeviche(){
 
 
     /*
-       Después del primer ceviche normal
-       aparece la oferta.
+       PRIMER CEVICHE NORMAL
+       -> aparece oferta
     */
 
     if(
@@ -5250,8 +5313,8 @@ function continuarDesdeCeviche(){
 
 
     /*
-       Después del segundo ceviche
-       pasamos a bebidas.
+       SEGUNDO CEVICHE DE Q25
+       -> bebidas
     */
 
     if(
@@ -5267,7 +5330,7 @@ function continuarDesdeCeviche(){
 
 
     /*
-       Seguridad: también mandamos a bebidas.
+       Seguridad
     */
 
     mostrarPasoBebidas();
@@ -5320,6 +5383,11 @@ function aceptarOferta(){
     );
 
 
+    /*
+       Ahora estamos configurando
+       UN SOLO segundo ceviche de Q25.
+    */
+
     flujoCompra.modo =
         "oferta";
 
@@ -5327,20 +5395,7 @@ function aceptarOferta(){
     limpiarOpcionesModal();
 
 
-    document
-    .getElementById(
-        "stepCeviche"
-    )
-    .style.display =
-        "block";
-
-
-    document
-    .getElementById(
-        "stepBebidas"
-    )
-    .style.display =
-        "none";
+    mostrarPasoCeviche();
 
 
     document
@@ -5356,7 +5411,7 @@ function aceptarOferta(){
         "customModalSubtitle"
     )
     .textContent =
-        "Tu segundo Mordisco del Mar cuesta solamente Q25.";
+        "Este segundo Mordisco del Mar cuesta solamente Q25.";
 
 
     document
@@ -5398,8 +5453,8 @@ function rechazarOferta(){
 
 
     /*
-       El primer ceviche queda guardado
-       temporalmente y se muestran bebidas.
+       El primer Q35 sigue guardado
+       temporalmente.
     */
 
     mostrarPasoBebidas();
@@ -5408,83 +5463,7 @@ function rechazarOferta(){
 
 
 /* =========================================================
-   MOSTRAR BEBIDAS
-========================================================= */
-
-function mostrarPasoBebidas(){
-
-    document
-    .getElementById(
-        "stepCeviche"
-    )
-    .style.display =
-        "none";
-
-
-    document
-    .getElementById(
-        "stepBebidas"
-    )
-    .style.display =
-        "block";
-
-
-    document
-    .getElementById(
-        "customModalTitle"
-    )
-    .textContent =
-        "Agrega tus bebidas";
-
-
-    document
-    .getElementById(
-        "customModalSubtitle"
-    )
-    .textContent =
-        "Elige una o varias bebidas para acompañar tu pedido.";
-
-
-    if(
-        flujoCompra.modo === "oferta"
-    ){
-
-        document
-        .getElementById(
-            "bebidaStepIndicator"
-        )
-        .textContent =
-            "OFERTA · BEBIDAS";
-
-    }else{
-
-        document
-        .getElementById(
-            "bebidaStepIndicator"
-        )
-        .textContent =
-            "PASO 2 · BEBIDAS";
-
-    }
-
-
-    document
-    .getElementById(
-        "customModal"
-    )
-    .classList.add(
-        "active"
-    );
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-/* =========================================================
-   BEBIDAS DENTRO DEL MODAL
+   BEBIDAS DEL MODAL
 ========================================================= */
 
 function alternarBebidaModal(
@@ -5520,7 +5499,9 @@ function alternarBebidaModal(
         flujoCompra.bebidasSeleccionadas.push({
 
             nombre,
+
             precio,
+
             emoji
 
         });
@@ -5536,25 +5517,20 @@ function alternarBebidaModal(
 
 
 /* =========================================================
-   VOLVER A CEVICHE
+   VOLVER DE BEBIDAS
 ========================================================= */
 
 function volverACeviche(){
 
-    document
-    .getElementById(
-        "stepBebidas"
-    )
-    .style.display =
-        "none";
+    /*
+       Si estamos configurando el segundo Q25,
+       volvemos al segundo ceviche.
 
+       Si es compra normal,
+       volvemos al primer ceviche.
+    */
 
-    document
-    .getElementById(
-        "stepCeviche"
-    )
-    .style.display =
-        "block";
+    mostrarPasoCeviche();
 
 
     document
@@ -5562,9 +5538,9 @@ function volverACeviche(){
         ".modal-beverage"
     )
     .forEach(
-        elemento => {
+        bebida => {
 
-            elemento.classList.remove(
+            bebida.classList.remove(
                 "selected"
             );
 
@@ -5580,14 +5556,7 @@ function volverACeviche(){
         flujoCompra.modo === "oferta"
     ){
 
-        flujoCompra.cevichesCompletados =
-            1;
-
-
-        flujoCompra.cevichesConfigurados =
-            [
-                flujoCompra.cevichesConfigurados[0]
-            ];
+        limpiarOpcionesModal();
 
 
         document
@@ -5603,7 +5572,7 @@ function volverACeviche(){
             "customModalSubtitle"
         )
         .textContent =
-            "Tu segundo Mordisco del Mar cuesta solamente Q25.";
+            "Este segundo Mordisco del Mar cuesta solamente Q25.";
 
 
         document
@@ -5614,6 +5583,9 @@ function volverACeviche(){
             "OFERTA · SEGUNDO CEVICHE";
 
     }else{
+
+        limpiarOpcionesModal();
+
 
         document
         .getElementById(
@@ -5630,6 +5602,14 @@ function volverACeviche(){
         .textContent =
             "Elige cómo quieres disfrutarlo antes de continuar.";
 
+
+        document
+        .getElementById(
+            "stepIndicator"
+        )
+        .textContent =
+            "PASO 1 · PERSONALIZACIÓN";
+
     }
 
 }
@@ -5642,7 +5622,8 @@ function volverACeviche(){
 function confirmarBebidas(){
 
     /*
-       Agregar todos los ceviches configurados.
+       Agregamos cada ceviche configurado
+       exactamente una vez.
     */
 
     flujoCompra.cevichesConfigurados.forEach(
@@ -5650,7 +5631,8 @@ function confirmarBebidas(){
 
             carrito.push({
 
-                tipo:"ceviche",
+                tipo:
+                    "ceviche",
 
                 nombre:
                     ceviche.nombre,
@@ -5682,7 +5664,7 @@ function confirmarBebidas(){
 
 
     /*
-       Agregar bebidas.
+       Agregamos las bebidas.
     */
 
     flujoCompra.bebidasSeleccionadas.forEach(
@@ -5726,7 +5708,9 @@ function confirmarBebidas(){
     );
 
 
-    if(navigator.vibrate){
+    if(
+        navigator.vibrate
+    ){
 
         navigator.vibrate(
             60
@@ -5787,7 +5771,7 @@ function cerrarPersonalizacion(){
 
 
 /* =========================================================
-   BEBIDAS DESDE SECCION
+   BEBIDAS DESDE LA SECCION
 ========================================================= */
 
 function agregarBebida(
@@ -5825,7 +5809,9 @@ function agregarBebidaSinAbrir(
         );
 
 
-    if(existente){
+    if(
+        existente
+    ){
 
         existente.cantidad += 1;
 
@@ -5851,6 +5837,68 @@ function agregarBebidaSinAbrir(
 
 
 /* =========================================================
+   CANTIDAD DE CEVICHES NORMALES
+========================================================= */
+
+function contarCevichesNormales(){
+
+    return carrito.reduce(
+        (
+            total,
+            producto
+        ) => {
+
+            if(
+                producto.tipo === "ceviche" &&
+                producto.precio === 35
+            ){
+
+                return total +
+                    producto.cantidad;
+
+            }
+
+            return total;
+
+        },
+        0
+    );
+
+}
+
+
+/* =========================================================
+   CANTIDAD DE PROMOCIONES
+========================================================= */
+
+function contarCevichesPromo(){
+
+    return carrito.reduce(
+        (
+            total,
+            producto
+        ) => {
+
+            if(
+                producto.tipo === "ceviche" &&
+                producto.precio === 25
+            ){
+
+                return total +
+                    producto.cantidad;
+
+            }
+
+            return total;
+
+        },
+        0
+    );
+
+}
+
+
+/* =========================================================
    CAMBIAR CANTIDAD
 ========================================================= */
 
@@ -5868,12 +5916,53 @@ function cambiarCantidad(
     }
 
 
-    carrito[index].cantidad +=
+    const producto =
+        carrito[index];
+
+
+    /*
+       UN Q25 NO PUEDE SUBIR A 2.
+
+       La oferta solamente permite
+       una unidad de Q25 por cada
+       compra normal de Q35.
+    */
+
+    if(
+        producto.tipo === "ceviche" &&
+        producto.precio === 25 &&
+        cambio > 0
+    ){
+
+        const normales =
+            contarCevichesNormales();
+
+
+        const promos =
+            contarCevichesPromo();
+
+
+        if(
+            promos >= normales
+        ){
+
+            alert(
+                "🔥 Ese ceviche ya utiliza la oferta de Q25. Agrega otro Mordisco del Mar de Q35 para obtener otra oferta."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    producto.cantidad +=
         cambio;
 
 
     if(
-        carrito[index].cantidad <= 0
+        producto.cantidad <= 0
     ){
 
         carrito.splice(
@@ -5897,6 +5986,15 @@ function eliminarProducto(
     index
 ){
 
+    if(
+        !carrito[index]
+    ){
+
+        return;
+
+    }
+
+
     carrito.splice(
         index,
         1
@@ -5909,7 +6007,7 @@ function eliminarProducto(
 
 
 /* =========================================================
-   ACTUALIZAR
+   ACTUALIZAR TODO
 ========================================================= */
 
 function actualizarTodo(){
@@ -6008,12 +6106,22 @@ function crearDetalleProducto(
 
 
 /* =========================================================
-   CONTROLES
+   CONTROLES PRODUCTO
 ========================================================= */
 
 function crearControlesProducto(
     index
 ){
+
+    const producto =
+        carrito[index];
+
+
+    const bloquearMas =
+        producto.tipo === "ceviche" &&
+        producto.precio === 25 &&
+        producto.cantidad >= 1;
+
 
     return `
 
@@ -6028,13 +6136,14 @@ function crearControlesProducto(
 
 
             <strong>
-                ${carrito[index].cantidad}
+                ${producto.cantidad}
             </strong>
 
 
             <button
                 class="qty-button"
                 onclick="cambiarCantidad(${index},1)"
+                ${bloquearMas ? "disabled" : ""}
             >
                 +
             </button>
@@ -6102,7 +6211,7 @@ function renderizarLista(
 
                         ${
                             producto.promo
-                            ? '<span style="color:#ff0878;font-size:11px;"> · Q25</span>'
+                            ? '<span style="color:#ff0878;font-size:11px;"> · OFERTA Q25</span>'
                             : ''
                         }
 
@@ -6165,6 +6274,7 @@ function renderizarLista(
             TOTAL
         </span>
 
+
         <span>
             Q${calcularTotal()}
         </span>
@@ -6180,7 +6290,7 @@ function renderizarLista(
 
 
 /* =========================================================
-   ACTUALIZAR PEDIDO
+   PEDIDO
 ========================================================= */
 
 function actualizarPedido(){
@@ -6234,7 +6344,7 @@ function actualizarPedido(){
 
 
 /* =========================================================
-   ACTUALIZAR CARRITO
+   CARRITO LATERAL
 ========================================================= */
 
 function actualizarCarrito(){
@@ -6487,36 +6597,16 @@ function enviarPedido(){
         "🧾 *PEDIDO*\n\n";
 
 
-    const cantidadPromo =
-        carrito.reduce(
-            (
-                total,
-                producto
-            ) => {
-
-                if(
-                    producto.tipo === "ceviche" &&
-                    producto.promo
-                ){
-
-                    return total +
-                        producto.cantidad;
-
-                }
-
-
-                return total;
-
-            },
-            0
-        );
+    const promos =
+        contarCevichesPromo();
 
 
     if(
-        cantidadPromo > 0
+        promos > 0
     ){
 
         mensaje +=
+
             "🔥 *OFERTA: SEGUNDO CEVICHE POR Q25*\n\n";
 
     }
@@ -6640,7 +6730,7 @@ function enviarPedido(){
 
 
 /* =========================================================
-   CERRAR MODAL AL HACER CLICK FUERA
+   CERRAR MODAL HACIENDO CLICK FUERA
 ========================================================= */
 
 document
@@ -6665,7 +6755,7 @@ document
 
 
 /* =========================================================
-   CERRAR OFERTA AL HACER CLICK FUERA
+   CERRAR OFERTA FUERA
 ========================================================= */
 
 document
@@ -6721,7 +6811,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   INICIO
+   INICIAR
 ========================================================= */
 
 actualizarTodo();
