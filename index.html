@@ -1,45 +1,55 @@
-Sí. Te paso **todo el código completo ya corregido**, con la lógica exacta:
+Claro. Aquí tienes **todo el código completo**, integrado con la lógica nueva de la promoción:
 
-**Q35 → personalizas → aparece “Llévate otro por Q25 más” → Sí/No → bebidas.**
-
-Además, la oferta **no se puede repetir sobre el mismo ceviche**: para obtener otro Q25, primero tiene que agregarse otro ceviche normal de Q35.
+* Cada **Q35 comprado genera 1 derecho a Q25**.
+* Desde el carrito puedes aumentar los Q35.
+* Al aumentar Q35, se habilita otra promoción Q25.
+* El Q25 **no puede aumentarse por encima de la cantidad de Q35**.
+* No puedes eliminar/bajar Q35 si eso deja promociones Q25 sin respaldo.
+* Desde el carrito puedes iniciar otro **Mordisco del Mar Q35**, y ese nuevo Q35 genera nuevamente su oportunidad de Q25.
+* Mantiene personalización, bebidas, WhatsApp y modal responsive.
 
 ```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Pulso Marino | Cevichería</title>
 
 <style>
 
 /* =========================================================
-   PULSO MARINO
+VARIABLES
 ========================================================= */
 
 :root{
+
     --deep:#001b44;
     --blue:#003b78;
     --blue2:#0077b6;
     --cyan:#00c9e8;
     --cyan-light:#9ff4ff;
-
     --pink:#ff0878;
     --yellow:#ffd21c;
-
     --white:#fff;
     --cream:#f5fcff;
     --text:#07345f;
     --gray:#6c8194;
-
     --green:#25D366;
 
     --shadow:
         0 20px 50px rgba(0,35,75,.15);
 }
+
+
+/* =========================================================
+RESET
+========================================================= */
 
 *{
     margin:0;
@@ -58,6 +68,7 @@ body{
         sans-serif;
 
     background:var(--cream);
+
     color:var(--text);
 
     overflow-x:hidden;
@@ -71,7 +82,7 @@ textarea{
 
 
 /* =========================================================
-   SCROLLBAR
+SCROLLBAR
 ========================================================= */
 
 ::-webkit-scrollbar{
@@ -94,10 +105,11 @@ textarea{
 
 
 /* =========================================================
-   NAVBAR
+NAVBAR
 ========================================================= */
 
 .navbar{
+
     position:fixed;
 
     top:0;
@@ -107,7 +119,9 @@ textarea{
     height:75px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     padding:0 6%;
@@ -127,6 +141,7 @@ textarea{
 }
 
 .navbar.scrolled{
+
     background:
         rgba(0,27,68,.96);
 
@@ -136,18 +151,24 @@ textarea{
 }
 
 .logo-nav{
+
     display:flex;
+
     align-items:center;
+
     gap:10px;
 
     color:white;
+
     text-decoration:none;
 
     font-weight:900;
+
     letter-spacing:1px;
 }
 
 .logo-nav img{
+
     width:48px;
     height:48px;
 
@@ -155,15 +176,20 @@ textarea{
 }
 
 .nav-links{
+
     display:flex;
+
     gap:30px;
 }
 
 .nav-links a{
+
     color:white;
+
     text-decoration:none;
 
     font-size:14px;
+
     font-weight:800;
 
     position:relative;
@@ -172,18 +198,22 @@ textarea{
 }
 
 .nav-links a:hover{
+
     color:var(--yellow);
 }
 
 .nav-links a::after{
+
     content:"";
 
     position:absolute;
 
     left:50%;
+
     bottom:-7px;
 
     width:0;
+
     height:3px;
 
     background:var(--yellow);
@@ -196,10 +226,12 @@ textarea{
 }
 
 .nav-links a:hover::after{
+
     width:100%;
 }
 
 .cart-nav{
+
     position:relative;
 
     width:48px;
@@ -230,12 +262,14 @@ textarea{
 }
 
 .cart-nav:hover{
+
     transform:
         translateY(-3px)
         scale(1.08);
 }
 
 .cart-number{
+
     position:absolute;
 
     top:-4px;
@@ -245,6 +279,7 @@ textarea{
     height:22px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -255,10 +290,12 @@ textarea{
     color:var(--deep);
 
     font-size:11px;
+
     font-weight:900;
 }
 
 .cart-number.bump{
+
     animation:
         cartBump
         .45s
@@ -267,16 +304,19 @@ textarea{
 
 
 /* =========================================================
-   HERO
+HERO
 ========================================================= */
 
 .hero{
+
     min-height:100vh;
 
     position:relative;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     text-align:center;
@@ -300,6 +340,7 @@ textarea{
 }
 
 .hero::before{
+
     content:"";
 
     position:absolute;
@@ -324,10 +365,11 @@ textarea{
 
 
 /* =========================================================
-   RAYOS
+RAYOS
 ========================================================= */
 
 .sun-rays{
+
     position:absolute;
 
     top:-330px;
@@ -366,10 +408,11 @@ textarea{
 
 
 /* =========================================================
-   PROFUNDIDAD
+OCEAN DEPTH
 ========================================================= */
 
 .ocean-depth{
+
     position:absolute;
 
     left:0;
@@ -392,10 +435,11 @@ textarea{
 
 
 /* =========================================================
-   BURBUJAS
+BURBUJAS
 ========================================================= */
 
 .bubbles{
+
     position:absolute;
 
     inset:0;
@@ -408,6 +452,7 @@ textarea{
 }
 
 .bubble{
+
     position:absolute;
 
     bottom:-80px;
@@ -424,6 +469,7 @@ textarea{
     box-shadow:
         inset 2px 2px 5px
         rgba(255,255,255,.6),
+
         0 0 8px
         rgba(255,255,255,.1);
 
@@ -559,10 +605,11 @@ textarea{
 
 
 /* =========================================================
-   PECES
+PECES
 ========================================================= */
 
 .sea-creatures{
+
     position:absolute;
 
     inset:0;
@@ -575,6 +622,7 @@ textarea{
 }
 
 .fish{
+
     position:absolute;
 
     font-size:34px;
@@ -598,11 +646,13 @@ textarea{
 }
 
 .fish.small{
+
     font-size:22px;
     opacity:.25;
 }
 
 .fish.big{
+
     font-size:45px;
     opacity:.28;
 }
@@ -685,6 +735,7 @@ textarea{
 }
 
 .fish.eaten{
+
     animation:
         fishEaten
         .45s
@@ -694,10 +745,11 @@ textarea{
 
 
 /* =========================================================
-   CAMARONES
+CAMARONES
 ========================================================= */
 
 .shrimp{
+
     position:absolute;
 
     font-size:32px;
@@ -737,10 +789,11 @@ textarea{
 
 
 /* =========================================================
-   PULPOS
+PULPOS
 ========================================================= */
 
 .background-octopus{
+
     position:absolute;
 
     font-size:55px;
@@ -757,6 +810,7 @@ textarea{
 }
 
 .octopus-one{
+
     left:8%;
     bottom:15%;
 
@@ -764,6 +818,7 @@ textarea{
 }
 
 .octopus-two{
+
     right:8%;
     top:32%;
 
@@ -772,10 +827,11 @@ textarea{
 
 
 /* =========================================================
-   TIBURON
+TIBURON
 ========================================================= */
 
 .shark{
+
     position:absolute;
 
     z-index:6;
@@ -806,6 +862,7 @@ textarea{
 }
 
 .shark-shadow{
+
     position:absolute;
 
     z-index:3;
@@ -821,6 +878,7 @@ textarea{
     filter:blur(15px);
 
     left:-250px;
+
     top:55%;
 
     opacity:0;
@@ -836,10 +894,11 @@ textarea{
 
 
 /* =========================================================
-   HERO CONTENIDO
+HERO CONTENIDO
 ========================================================= */
 
 .hero-content{
+
     position:relative;
 
     z-index:20;
@@ -854,6 +913,7 @@ textarea{
 }
 
 .hero-logo{
+
     width:
         min(
             450px,
@@ -874,6 +934,7 @@ textarea{
         logoAppear
         1.3s
         ease,
+
         logoFloat
         5s
         ease-in-out
@@ -882,6 +943,7 @@ textarea{
 }
 
 .hero-tag{
+
     display:inline-flex;
 
     align-items:center;
@@ -925,6 +987,7 @@ textarea{
 }
 
 .hero h1{
+
     margin-top:25px;
 
     color:white;
@@ -953,10 +1016,12 @@ textarea{
 }
 
 .hero h1 span{
+
     color:var(--yellow);
 }
 
 .hero-description{
+
     max-width:650px;
 
     margin:22px auto 0;
@@ -975,6 +1040,7 @@ textarea{
 }
 
 .hero-button{
+
     display:inline-flex;
 
     align-items:center;
@@ -1010,6 +1076,7 @@ textarea{
 }
 
 .hero-button:hover{
+
     transform:
         translateY(-5px)
         scale(1.04);
@@ -1017,16 +1084,19 @@ textarea{
 
 
 /* =========================================================
-   OLAS
+OLAS
 ========================================================= */
 
 .hero-waves{
+
     position:absolute;
 
     bottom:-2px;
+
     left:0;
 
     width:100%;
+
     height:150px;
 
     z-index:30;
@@ -1035,12 +1105,15 @@ textarea{
 }
 
 .wave{
+
     position:absolute;
 
     bottom:-100px;
+
     left:-10%;
 
     width:120%;
+
     height:170px;
 
     border-radius:
@@ -1055,6 +1128,7 @@ textarea{
 }
 
 .wave-1{
+
     background:#eafaff;
 
     animation:
@@ -1065,6 +1139,7 @@ textarea{
 }
 
 .wave-2{
+
     bottom:-120px;
 
     background:#c7f7ff;
@@ -1080,6 +1155,7 @@ textarea{
 }
 
 .wave-3{
+
     bottom:-140px;
 
     background:white;
@@ -1095,10 +1171,85 @@ textarea{
 
 
 /* =========================================================
-   PRODUCTOS
+SECCIONES
+========================================================= */
+
+.menu-section{
+
+    position:relative;
+
+    padding:
+        110px
+        20px;
+
+    background:
+        linear-gradient(
+            #eafaff,
+            #ffffff
+        );
+
+    overflow:hidden;
+}
+
+.section-heading{
+
+    text-align:center;
+
+    max-width:700px;
+
+    margin:
+        0 auto
+        60px;
+}
+
+.section-label{
+
+    color:var(--pink);
+
+    font-size:12px;
+
+    font-weight:1000;
+
+    letter-spacing:5px;
+}
+
+.section-heading h2{
+
+    margin-top:10px;
+
+    color:var(--deep);
+
+    font-size:
+        clamp(
+            36px,
+            5vw,
+            55px
+        );
+
+    font-weight:1000;
+}
+
+.section-heading h2 span{
+
+    color:var(--pink);
+}
+
+.section-heading p{
+
+    margin-top:15px;
+
+    color:var(--gray);
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+PRODUCTOS
 ========================================================= */
 
 .products{
+
     max-width:1200px;
 
     margin:auto;
@@ -1115,6 +1266,7 @@ textarea{
 }
 
 .product{
+
     position:relative;
 
     background:white;
@@ -1136,6 +1288,7 @@ textarea{
 }
 
 .product.visible{
+
     opacity:1;
 
     transform:
@@ -1143,11 +1296,13 @@ textarea{
 }
 
 .product:hover{
+
     transform:
         translateY(-14px);
 }
 
 .product-image-box{
+
     height:285px;
 
     position:relative;
@@ -1163,7 +1318,9 @@ textarea{
 }
 
 .product-image{
+
     width:100%;
+
     height:100%;
 
     object-fit:cover;
@@ -1173,10 +1330,13 @@ textarea{
 }
 
 .product:hover .product-image{
-    transform:scale(1.1);
+
+    transform:
+        scale(1.1);
 }
 
 .product-image-box::after{
+
     content:"";
 
     position:absolute;
@@ -1191,6 +1351,7 @@ textarea{
 }
 
 .product-number{
+
     position:absolute;
 
     z-index:5;
@@ -1217,6 +1378,7 @@ textarea{
 }
 
 .product-badge{
+
     position:absolute;
 
     z-index:5;
@@ -1224,7 +1386,9 @@ textarea{
     top:20px;
     right:18px;
 
-    padding:8px 13px;
+    padding:
+        8px
+        13px;
 
     border-radius:30px;
 
@@ -1238,10 +1402,12 @@ textarea{
 }
 
 .product-content{
+
     padding:28px;
 }
 
 .product-content h3{
+
     color:var(--blue);
 
     font-size:26px;
@@ -1250,6 +1416,7 @@ textarea{
 }
 
 .product-content p{
+
     margin-top:10px;
 
     min-height:52px;
@@ -1262,6 +1429,7 @@ textarea{
 }
 
 .product-bottom{
+
     display:flex;
 
     align-items:center;
@@ -1274,6 +1442,7 @@ textarea{
 }
 
 .product-price{
+
     color:var(--pink);
 
     font-size:29px;
@@ -1282,6 +1451,7 @@ textarea{
 }
 
 .add-button{
+
     border:none;
 
     padding:
@@ -1307,6 +1477,7 @@ textarea{
 }
 
 .add-button:hover{
+
     transform:
         translateY(-3px);
 
@@ -1316,6 +1487,7 @@ textarea{
 }
 
 .product .add-button:disabled{
+
     opacity:.65;
 
     cursor:not-allowed;
@@ -1325,78 +1497,11 @@ textarea{
 
 
 /* =========================================================
-   SECCIONES
-========================================================= */
-
-.menu-section{
-    position:relative;
-
-    padding:
-        110px
-        20px;
-
-    background:
-        linear-gradient(
-            #eafaff,
-            #ffffff
-        );
-
-    overflow:hidden;
-}
-
-.section-heading{
-    text-align:center;
-
-    max-width:700px;
-
-    margin:
-        0 auto
-        60px;
-}
-
-.section-label{
-    color:var(--pink);
-
-    font-size:12px;
-
-    font-weight:1000;
-
-    letter-spacing:5px;
-}
-
-.section-heading h2{
-    margin-top:10px;
-
-    color:var(--deep);
-
-    font-size:
-        clamp(
-            36px,
-            5vw,
-            55px
-        );
-
-    font-weight:1000;
-}
-
-.section-heading h2 span{
-    color:var(--pink);
-}
-
-.section-heading p{
-    margin-top:15px;
-
-    color:var(--gray);
-
-    line-height:1.6;
-}
-
-
-/* =========================================================
-   BEBIDAS
+BEBIDAS
 ========================================================= */
 
 .beverage-grid{
+
     max-width:1200px;
 
     margin:0 auto;
@@ -1413,6 +1518,7 @@ textarea{
 }
 
 .beverage-card{
+
     background:white;
 
     border-radius:22px;
@@ -1434,6 +1540,7 @@ textarea{
 }
 
 .beverage-icon{
+
     width:58px;
     height:58px;
 
@@ -1450,16 +1557,19 @@ textarea{
 }
 
 .beverage-info h3{
+
     margin-bottom:5px;
 }
 
 .beverage-info p{
+
     color:var(--gray);
 
     font-size:14px;
 }
 
 .beverage-price{
+
     font-weight:1000;
 
     font-size:20px;
@@ -1468,6 +1578,7 @@ textarea{
 }
 
 .beverage-add{
+
     grid-column:2 / 4;
 
     border:0;
@@ -1494,10 +1605,11 @@ textarea{
 
 
 /* =========================================================
-   FRASE
+OCEAN MESSAGE
 ========================================================= */
 
 .ocean-message{
+
     position:relative;
 
     margin-top:90px;
@@ -1519,6 +1631,7 @@ textarea{
 }
 
 .ocean-message h2{
+
     position:relative;
 
     z-index:2;
@@ -1536,10 +1649,12 @@ textarea{
 }
 
 .ocean-message h2 span{
+
     color:var(--yellow);
 }
 
 .ocean-message p{
+
     position:relative;
 
     z-index:2;
@@ -1556,10 +1671,11 @@ textarea{
 
 
 /* =========================================================
-   PEDIDO
+PEDIDO
 ========================================================= */
 
 .order-section{
+
     padding:
         110px
         20px;
@@ -1568,6 +1684,7 @@ textarea{
 }
 
 .order-container{
+
     max-width:1100px;
 
     margin:auto;
@@ -1582,6 +1699,7 @@ textarea{
 }
 
 .order-card{
+
     background:white;
 
     border-radius:27px;
@@ -1592,6 +1710,7 @@ textarea{
 }
 
 .order-title{
+
     padding:
         23px
         27px;
@@ -1611,11 +1730,15 @@ textarea{
 }
 
 .order-body{
+
     padding:28px;
 }
 
 .empty-cart{
-    padding:40px 10px;
+
+    padding:
+        40px
+        10px;
 
     text-align:center;
 
@@ -1623,12 +1746,14 @@ textarea{
 }
 
 .empty-cart-icon{
+
     font-size:50px;
 
     margin-bottom:15px;
 }
 
 .cart-item{
+
     display:grid;
 
     grid-template-columns:
@@ -1638,7 +1763,8 @@ textarea{
     gap:12px;
 
     padding:
-        16px 0;
+        16px
+        0;
 
     border-bottom:
         1px solid
@@ -1646,12 +1772,14 @@ textarea{
 }
 
 .cart-item-name{
+
     color:var(--blue);
 
     font-weight:1000;
 }
 
 .cart-item-price{
+
     margin-top:4px;
 
     color:var(--gray);
@@ -1660,6 +1788,7 @@ textarea{
 }
 
 .cart-controls{
+
     display:flex;
 
     align-items:center;
@@ -1668,6 +1797,7 @@ textarea{
 }
 
 .qty-button{
+
     width:30px;
     height:30px;
 
@@ -1685,15 +1815,19 @@ textarea{
 }
 
 .qty-button:disabled{
-    opacity:.5;
+
+    opacity:.45;
+
     cursor:not-allowed;
 }
 
 .delete-button{
+
     background:#ff4c61;
 }
 
 .item-total{
+
     grid-column:1/-1;
 
     text-align:right;
@@ -1704,6 +1838,7 @@ textarea{
 }
 
 .order-total{
+
     display:flex;
 
     justify-content:space-between;
@@ -1724,19 +1859,22 @@ textarea{
 }
 
 .order-total span:last-child{
+
     color:var(--pink);
 }
 
 
 /* =========================================================
-   FORMULARIO
+FORMULARIO
 ========================================================= */
 
 .form-group{
+
     margin-bottom:17px;
 }
 
 .form-group label{
+
     display:block;
 
     margin-bottom:7px;
@@ -1750,6 +1888,7 @@ textarea{
 
 .form-group input,
 .form-group textarea{
+
     width:100%;
 
     padding:14px;
@@ -1770,6 +1909,7 @@ textarea{
 }
 
 .form-group textarea{
+
     min-height:90px;
 
     resize:vertical;
@@ -1777,6 +1917,7 @@ textarea{
 
 .form-group input:focus,
 .form-group textarea:focus{
+
     border-color:var(--cyan);
 
     box-shadow:
@@ -1785,6 +1926,7 @@ textarea{
 }
 
 .whatsapp-button{
+
     width:100%;
 
     padding:17px;
@@ -1812,6 +1954,7 @@ textarea{
 }
 
 .whatsapp-button:hover{
+
     transform:
         translateY(-4px);
 
@@ -1821,6 +1964,7 @@ textarea{
 }
 
 .whatsapp-info{
+
     text-align:center;
 
     margin-top:10px;
@@ -1832,10 +1976,11 @@ textarea{
 
 
 /* =========================================================
-   CARRITO LATERAL
+OVERLAY
 ========================================================= */
 
 .overlay{
+
     position:fixed;
 
     inset:0;
@@ -1853,17 +1998,25 @@ textarea{
 }
 
 .overlay.active{
+
     opacity:1;
 
     visibility:visible;
 }
 
+
+/* =========================================================
+CARRITO LATERAL
+========================================================= */
+
 .cart-panel{
+
     position:fixed;
 
     z-index:3000;
 
     top:0;
+
     right:-460px;
 
     width:
@@ -1889,10 +2042,12 @@ textarea{
 }
 
 .cart-panel.active{
+
     right:0;
 }
 
 .cart-panel-header{
+
     display:flex;
 
     justify-content:space-between;
@@ -1903,10 +2058,12 @@ textarea{
 }
 
 .cart-panel-header h2{
+
     color:var(--blue);
 }
 
 .close-cart{
+
     width:40px;
     height:40px;
 
@@ -1923,10 +2080,11 @@ textarea{
 
 
 /* =========================================================
-   MODAL CEVICHE
+MODAL CEVICHE
 ========================================================= */
 
 .custom-modal{
+
     position:fixed;
 
     inset:0;
@@ -1939,10 +2097,10 @@ textarea{
 
     justify-content:center;
 
-    padding:20px;
+    padding:16px;
 
     background:
-        rgba(0,15,40,.72);
+        rgba(0,15,40,.75);
 
     backdrop-filter:blur(8px);
 
@@ -1950,25 +2108,37 @@ textarea{
 
     visibility:hidden;
 
+    pointer-events:none;
+
     transition:.3s ease;
 }
 
 .custom-modal.active{
+
     opacity:1;
 
     visibility:visible;
+
+    pointer-events:auto;
 }
 
 .custom-modal-card{
+
     width:
         min(
             560px,
             96vw
         );
 
-    max-height:92vh;
+    max-height:
+        min(
+            90vh,
+            760px
+        );
 
-    overflow:auto;
+    overflow-y:auto;
+
+    overflow-x:hidden;
 
     background:white;
 
@@ -1979,8 +2149,8 @@ textarea{
         rgba(0,0,0,.32);
 
     transform:
-        translateY(25px)
-        scale(.96);
+        translateY(15px)
+        scale(.97);
 
     transition:
         .35s
@@ -1989,12 +2159,14 @@ textarea{
 
 .custom-modal.active
 .custom-modal-card{
+
     transform:
         translateY(0)
         scale(1);
 }
 
 .custom-modal-header{
+
     padding:
         24px
         26px
@@ -2011,12 +2183,14 @@ textarea{
 }
 
 .custom-modal-header h3{
+
     font-size:24px;
 
     font-weight:1000;
 }
 
 .custom-modal-header p{
+
     margin-top:7px;
 
     opacity:.88;
@@ -2025,17 +2199,51 @@ textarea{
 }
 
 .custom-modal-body{
+
     padding:
         25px
         26px
         26px;
 }
 
+
+/* =========================================================
+INDICADOR
+========================================================= */
+
+.step-indicator{
+
+    display:inline-flex;
+
+    padding:
+        7px
+        12px;
+
+    border-radius:20px;
+
+    background:#eafaff;
+
+    color:var(--blue);
+
+    font-size:11px;
+
+    font-weight:1000;
+
+    margin-bottom:18px;
+}
+
+
+/* =========================================================
+OPCIONES
+========================================================= */
+
 .custom-option-group{
+
     margin-bottom:22px;
 }
 
 .custom-option-title{
+
     display:flex;
 
     align-items:center;
@@ -2052,6 +2260,7 @@ textarea{
 }
 
 .custom-options{
+
     display:grid;
 
     grid-template-columns:
@@ -2064,10 +2273,12 @@ textarea{
 }
 
 .custom-option{
+
     position:relative;
 }
 
 .custom-option input{
+
     position:absolute;
 
     opacity:0;
@@ -2076,6 +2287,7 @@ textarea{
 }
 
 .custom-option label{
+
     display:flex;
 
     align-items:center;
@@ -2110,6 +2322,7 @@ textarea{
 }
 
 .custom-option label:hover{
+
     border-color:var(--cyan);
 
     transform:
@@ -2117,6 +2330,7 @@ textarea{
 }
 
 .custom-option input:checked + label{
+
     border-color:var(--pink);
 
     background:
@@ -2131,16 +2345,18 @@ textarea{
 
 
 /* =========================================================
-   BEBIDAS DENTRO DEL MODAL
+BEBIDAS DEL MODAL
 ========================================================= */
 
 .modal-beverage-list{
+
     display:grid;
 
     gap:11px;
 }
 
 .modal-beverage{
+
     display:grid;
 
     grid-template-columns:
@@ -2168,10 +2384,12 @@ textarea{
 }
 
 .modal-beverage:hover{
+
     border-color:var(--cyan);
 }
 
 .modal-beverage.selected{
+
     border-color:var(--pink);
 
     background:
@@ -2179,6 +2397,7 @@ textarea{
 }
 
 .modal-beverage-icon{
+
     width:48px;
     height:48px;
 
@@ -2195,12 +2414,14 @@ textarea{
 }
 
 .modal-beverage-info h4{
+
     color:var(--deep);
 
     font-size:14px;
 }
 
 .modal-beverage-info p{
+
     margin-top:3px;
 
     color:var(--gray);
@@ -2209,6 +2430,7 @@ textarea{
 }
 
 .modal-beverage-check{
+
     width:28px;
     height:28px;
 
@@ -2232,6 +2454,7 @@ textarea{
 
 .modal-beverage.selected
 .modal-beverage-check{
+
     background:var(--pink);
 
     border-color:var(--pink);
@@ -2241,10 +2464,11 @@ textarea{
 
 
 /* =========================================================
-   BOTONES MODAL
+BOTONES MODAL
 ========================================================= */
 
 .modal-actions{
+
     display:grid;
 
     grid-template-columns:
@@ -2257,6 +2481,7 @@ textarea{
 }
 
 .modal-button{
+
     border:none;
 
     padding:15px;
@@ -2271,12 +2496,14 @@ textarea{
 }
 
 .modal-cancel{
+
     background:#edf5f8;
 
     color:var(--text);
 }
 
 .modal-confirm{
+
     background:
         linear-gradient(
             135deg,
@@ -2292,16 +2519,18 @@ textarea{
 }
 
 .modal-button:hover{
+
     transform:
         translateY(-3px);
 }
 
 
 /* =========================================================
-   ANUNCIO "OTRO POR Q25"
+OFERTA Q25
 ========================================================= */
 
 .offer-modal{
+
     position:fixed;
 
     inset:0;
@@ -2314,7 +2543,7 @@ textarea{
 
     justify-content:center;
 
-    padding:20px;
+    padding:16px;
 
     background:
         rgba(0,15,40,.78);
@@ -2325,17 +2554,21 @@ textarea{
 
     visibility:hidden;
 
+    pointer-events:none;
+
     transition:.3s ease;
 }
 
 .offer-modal.active{
+
     opacity:1;
 
     visibility:visible;
+
+    pointer-events:auto;
 }
 
 .offer-card{
-    position:relative;
 
     width:
         min(
@@ -2343,7 +2576,9 @@ textarea{
             94vw
         );
 
-    overflow:hidden;
+    max-height:90vh;
+
+    overflow-y:auto;
 
     background:white;
 
@@ -2353,6 +2588,8 @@ textarea{
         0 30px 80px
         rgba(0,0,0,.35);
 
+    text-align:center;
+
     transform:
         scale(.85)
         translateY(25px);
@@ -2360,18 +2597,18 @@ textarea{
     transition:
         .4s
         cubic-bezier(.2,.8,.2,1);
-
-    text-align:center;
 }
 
 .offer-modal.active
 .offer-card{
+
     transform:
         scale(1)
         translateY(0);
 }
 
 .offer-header{
+
     padding:
         36px
         22px
@@ -2380,7 +2617,7 @@ textarea{
     background:
         radial-gradient(
             circle at 50% 0%,
-            #19d9ef 0%,
+            #18d9ee 0%,
             #008dc7 42%,
             #003b78 100%
         );
@@ -2389,10 +2626,12 @@ textarea{
 }
 
 .offer-icon{
+
     font-size:50px;
 }
 
 .offer-small{
+
     margin-top:8px;
 
     color:var(--yellow);
@@ -2405,6 +2644,7 @@ textarea{
 }
 
 .offer-header h2{
+
     margin-top:10px;
 
     font-size:
@@ -2420,14 +2660,20 @@ textarea{
 }
 
 .offer-header h2 span{
+
     color:var(--yellow);
 }
 
 .offer-body{
-    padding:27px 25px 28px;
+
+    padding:
+        27px
+        25px
+        28px;
 }
 
 .offer-body p{
+
     color:var(--gray);
 
     line-height:1.6;
@@ -2436,6 +2682,7 @@ textarea{
 }
 
 .offer-saving{
+
     display:inline-block;
 
     margin-top:13px;
@@ -2456,6 +2703,7 @@ textarea{
 }
 
 .offer-actions{
+
     display:grid;
 
     grid-template-columns:
@@ -2468,9 +2716,12 @@ textarea{
 }
 
 .offer-button{
+
     border:none;
 
-    padding:15px 10px;
+    padding:
+        15px
+        10px;
 
     border-radius:14px;
 
@@ -2484,6 +2735,7 @@ textarea{
 }
 
 .offer-yes{
+
     background:
         linear-gradient(
             135deg,
@@ -2499,24 +2751,72 @@ textarea{
 }
 
 .offer-no{
+
     background:#edf5f8;
 
     color:var(--text);
 }
 
 .offer-button:hover{
+
     transform:
         translateY(-3px);
 }
 
 
 /* =========================================================
-   ANIMACIONES
+BOTON AGREGAR OTRO DESDE CARRITO
+========================================================= */
+
+.add-another-ceviche{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--cyan)
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:1000;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.add-another-ceviche:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 22px
+        rgba(0,120,200,.22);
+}
+
+
+/* =========================================================
+ANIMACIONES
 ========================================================= */
 
 @keyframes bubbleRise{
 
     0%{
+
         transform:
             translateY(0)
             translateX(0)
@@ -2526,10 +2826,12 @@ textarea{
     }
 
     15%{
+
         opacity:.8;
     }
 
     50%{
+
         transform:
             translateY(-50vh)
             translateX(35px)
@@ -2537,6 +2839,7 @@ textarea{
     }
 
     100%{
+
         transform:
             translateY(-120vh)
             translateX(-30px)
@@ -2546,49 +2849,48 @@ textarea{
     }
 }
 
-
 @keyframes fishSwim{
 
     0%{
+
         transform:
             translateX(-120px)
-            translateY(0)
-            scaleX(1);
+            translateY(0);
     }
 
     25%{
+
         transform:
             translateX(25vw)
-            translateY(-25px)
-            scaleX(1);
+            translateY(-25px);
     }
 
     50%{
+
         transform:
             translateX(55vw)
-            translateY(20px)
-            scaleX(1);
+            translateY(20px);
     }
 
     75%{
+
         transform:
             translateX(82vw)
-            translateY(-30px)
-            scaleX(1);
+            translateY(-30px);
     }
 
     100%{
+
         transform:
             translateX(115vw)
-            translateY(10px)
-            scaleX(1);
+            translateY(10px);
     }
 }
-
 
 @keyframes shrimpSwim{
 
     0%{
+
         transform:
             translateX(-100px)
             translateY(0)
@@ -2596,6 +2898,7 @@ textarea{
     }
 
     30%{
+
         transform:
             translateX(30vw)
             translateY(-25px)
@@ -2603,6 +2906,7 @@ textarea{
     }
 
     60%{
+
         transform:
             translateX(65vw)
             translateY(20px)
@@ -2610,6 +2914,7 @@ textarea{
     }
 
     100%{
+
         transform:
             translateX(115vw)
             translateY(-10px)
@@ -2617,10 +2922,10 @@ textarea{
     }
 }
 
-
 @keyframes fishEaten{
 
     0%{
+
         opacity:.45;
 
         transform:
@@ -2628,6 +2933,7 @@ textarea{
     }
 
     50%{
+
         opacity:1;
 
         transform:
@@ -2635,6 +2941,7 @@ textarea{
     }
 
     100%{
+
         opacity:0;
 
         transform:
@@ -2642,10 +2949,10 @@ textarea{
     }
 }
 
-
 @keyframes sharkSwim{
 
     0%{
+
         opacity:0;
 
         transform:
@@ -2656,10 +2963,12 @@ textarea{
     }
 
     8%{
+
         opacity:.25;
     }
 
     18%{
+
         opacity:.5;
 
         transform:
@@ -2670,6 +2979,7 @@ textarea{
     }
 
     40%{
+
         opacity:.65;
 
         transform:
@@ -2680,6 +2990,7 @@ textarea{
     }
 
     65%{
+
         opacity:.55;
 
         transform:
@@ -2690,10 +3001,12 @@ textarea{
     }
 
     85%{
+
         opacity:.35;
     }
 
     100%{
+
         opacity:0;
 
         transform:
@@ -2704,10 +3017,10 @@ textarea{
     }
 }
 
-
 @keyframes sharkShadow{
 
     0%{
+
         opacity:0;
 
         transform:
@@ -2715,14 +3028,17 @@ textarea{
     }
 
     15%{
+
         opacity:.25;
     }
 
     70%{
+
         opacity:.2;
     }
 
     100%{
+
         opacity:0;
 
         transform:
@@ -2730,10 +3046,10 @@ textarea{
     }
 }
 
-
 @keyframes octopusBackground{
 
     0%{
+
         opacity:0;
 
         transform:
@@ -2742,16 +3058,19 @@ textarea{
     }
 
     15%{
+
         opacity:.25;
     }
 
     40%{
+
         transform:
             translateY(-20px)
             scale(1);
     }
 
     65%{
+
         opacity:.2;
 
         transform:
@@ -2760,6 +3079,7 @@ textarea{
     }
 
     100%{
+
         opacity:0;
 
         transform:
@@ -2768,10 +3088,10 @@ textarea{
     }
 }
 
-
 @keyframes logoAppear{
 
     from{
+
         opacity:0;
 
         transform:
@@ -2780,6 +3100,7 @@ textarea{
     }
 
     to{
+
         opacity:1;
 
         transform:
@@ -2788,24 +3109,25 @@ textarea{
     }
 }
 
-
 @keyframes logoFloat{
 
     0%,100%{
+
         transform:
             translateY(0);
     }
 
     50%{
+
         transform:
             translateY(-8px);
     }
 }
 
-
 @keyframes fadeUp{
 
     from{
+
         opacity:0;
 
         transform:
@@ -2813,6 +3135,7 @@ textarea{
     }
 
     to{
+
         opacity:1;
 
         transform:
@@ -2820,115 +3143,131 @@ textarea{
     }
 }
 
-
 @keyframes waveMove{
 
     0%,100%{
+
         transform:
             translateX(0)
             rotate(0);
     }
 
     50%{
+
         transform:
             translateX(-4%)
             rotate(1deg);
     }
 }
 
-
 @keyframes rotateLight{
 
     to{
+
         transform:
             translateX(-50%)
             rotate(360deg);
     }
 }
 
-
 @keyframes cartBump{
 
     0%{
-        transform:scale(1);
+
+        transform:
+            scale(1);
     }
 
     40%{
+
         transform:
             scale(1.4)
             rotate(-8deg);
     }
 
     70%{
+
         transform:
             scale(.9)
             rotate(6deg);
     }
 
     100%{
-        transform:scale(1);
+
+        transform:
+            scale(1);
     }
 }
 
 
 /* =========================================================
-   RESPONSIVE
+RESPONSIVE
 ========================================================= */
 
 @media(max-width:1000px){
 
     .products{
+
         grid-template-columns:1fr;
 
         max-width:500px;
     }
 
     .order-container{
+
         grid-template-columns:1fr;
 
         max-width:650px;
     }
 
     .beverage-grid{
+
         grid-template-columns:1fr;
 
         max-width:650px;
     }
 
     .nav-links{
+
         display:none;
     }
 
     .shark{
+
         font-size:70px;
     }
 }
 
-
 @media(max-width:600px){
 
     .navbar{
+
         height:65px;
 
         padding:
-            0 18px;
+            0
+            18px;
     }
 
     .logo-nav span{
+
         display:none;
     }
 
     .hero{
+
         padding-top:95px;
 
         padding-bottom:150px;
     }
 
     .hero-logo{
+
         width:300px;
     }
 
     .hero-tag{
+
         margin-top:14px;
 
         padding:
@@ -2941,14 +3280,17 @@ textarea{
     }
 
     .hero h1{
+
         font-size:43px;
     }
 
     .hero-description{
+
         font-size:15px;
     }
 
     .hero-button{
+
         padding:
             15px
             20px;
@@ -2957,72 +3299,150 @@ textarea{
     }
 
     .shark{
+
         font-size:55px;
 
         top:50%;
     }
 
     .fish{
+
         font-size:25px;
     }
 
     .fish.big{
+
         font-size:32px;
     }
 
     .shrimp{
+
         font-size:25px;
     }
 
     .background-octopus{
+
         font-size:38px;
     }
 
     .menu-section,
     .order-section{
+
         padding:
             80px
             16px;
     }
 
     .product-image-box{
+
         height:250px;
     }
 
     .ocean-message{
+
         padding:
             60px
             20px;
     }
 
     .custom-modal{
-        padding:12px;
+
+        align-items:center;
+
+        padding:
+            10px;
+
+        overflow:hidden;
+    }
+
+    .custom-modal-card{
+
+        width:100%;
+
+        max-width:520px;
+
+        max-height:92vh;
+
+        border-radius:22px;
+
+        -webkit-overflow-scrolling:touch;
     }
 
     .custom-modal-header{
+
         padding:
-            20px
+            19px
             20px
             15px;
     }
 
+    .custom-modal-header h3{
+
+        font-size:21px;
+    }
+
     .custom-modal-body{
-        padding:20px;
+
+        padding:
+            20px;
     }
 
     .custom-options{
+
         grid-template-columns:1fr;
     }
 
     .modal-actions{
+
         grid-template-columns:1fr;
+    }
+
+    .offer-modal{
+
+        padding:
+            10px;
+    }
+
+    .offer-card{
+
+        width:100%;
+
+        max-width:440px;
+
+        max-height:90vh;
+
+        border-radius:24px;
+
+        overflow-y:auto;
+
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .offer-header{
+
+        padding:
+            30px
+            20px
+            25px;
     }
 
     .offer-actions{
+
         grid-template-columns:1fr;
     }
-}
 
+    .cart-panel{
+
+        width:
+            min(
+                94vw,
+                450px
+            );
+
+        padding:18px;
+    }
+
+}
 
 @media(prefers-reduced-motion:reduce){
 
@@ -3047,10 +3467,13 @@ textarea{
 
 
 <!-- =========================================================
-     NAVBAR
+NAVBAR
 ========================================================= -->
 
-<nav class="navbar" id="navbar">
+<nav
+class="navbar"
+id="navbar"
+>
 
     <a
         href="#inicio"
@@ -3111,12 +3534,12 @@ textarea{
 
 
 <!-- =========================================================
-     HERO
+HERO
 ========================================================= -->
 
 <section
-    class="hero"
-    id="inicio"
+class="hero"
+id="inicio"
 >
 
     <div class="sun-rays"></div>
@@ -3234,6 +3657,7 @@ textarea{
 
     <div class="hero-content">
 
+
         <img
             src="logo.png"
             alt="Pulso Marino"
@@ -3296,12 +3720,12 @@ textarea{
 
 
 <!-- =========================================================
-     CEVICHES
+CEVICHES
 ========================================================= -->
 
 <section
-    class="menu-section"
-    id="ceviches"
+class="menu-section"
+id="ceviches"
 >
 
     <div class="section-heading">
@@ -3338,7 +3762,7 @@ textarea{
     <div class="products">
 
 
-        <!-- CEVICHE 1 -->
+        <!-- MORDISCO -->
 
         <article
             class="product reveal"
@@ -3352,7 +3776,9 @@ textarea{
 
 
                 <div class="product-badge">
+
                     🔥 FAVORITO
+
                 </div>
 
 
@@ -3385,7 +3811,9 @@ textarea{
                 <div class="product-bottom">
 
                     <div class="product-price">
+
                         Q35
+
                     </div>
 
 
@@ -3405,7 +3833,7 @@ textarea{
         </article>
 
 
-        <!-- CEVICHE 2 -->
+        <!-- BRISA -->
 
         <article
             class="product reveal"
@@ -3459,7 +3887,9 @@ textarea{
                 <div class="product-bottom">
 
                     <div class="product-price">
+
                         Q45
+
                     </div>
 
 
@@ -3480,7 +3910,7 @@ textarea{
         </article>
 
 
-        <!-- CEVICHE 3 -->
+        <!-- TESORO -->
 
         <article
             class="product reveal"
@@ -3535,7 +3965,9 @@ textarea{
                 <div class="product-bottom">
 
                     <div class="product-price">
+
                         Q55
+
                     </div>
 
 
@@ -3555,19 +3987,18 @@ textarea{
 
         </article>
 
-
     </div>
 
 </section>
 
 
 <!-- =========================================================
-     BEBIDAS
+BEBIDAS
 ========================================================= -->
 
 <section
-    class="menu-section"
-    id="bebidas"
+class="menu-section"
+id="bebidas"
 >
 
     <div class="section-heading">
@@ -3619,6 +4050,7 @@ textarea{
                     Cerveza
                 </h3>
 
+
                 <p>
                     Refrescante para acompañar tu ceviche.
                 </p>
@@ -3663,6 +4095,7 @@ textarea{
                 <h3>
                     Pepsi
                 </h3>
+
 
                 <p>
                     Bebida fría.
@@ -3709,6 +4142,7 @@ textarea{
                     Coca-Cola
                 </h3>
 
+
                 <p>
                     Bebida fría.
                 </p>
@@ -3738,19 +4172,16 @@ textarea{
 
         </article>
 
-
     </div>
 
 </section>
 
 
 <!-- =========================================================
-     FRASE
+FRASE
 ========================================================= -->
 
-<section
-    class="ocean-message"
->
+<section class="ocean-message">
 
     <h2>
 
@@ -3774,12 +4205,12 @@ textarea{
 
 
 <!-- =========================================================
-     PEDIDO
+PEDIDO
 ========================================================= -->
 
 <section
-    class="order-section"
-    id="pedido"
+class="order-section"
+id="pedido"
 >
 
     <div class="section-heading">
@@ -3944,24 +4375,47 @@ textarea{
 
 
 <!-- =========================================================
-     FOOTER
+FOOTER
 ========================================================= -->
 
-<footer>
+<footer
+    style="
+        background:#001b44;
+        color:white;
+        text-align:center;
+        padding:60px 20px 25px;
+    "
+>
 
     <img
         src="logo.png"
         alt="Pulso Marino"
         class="footer-logo"
+        style="
+            width:90px;
+            height:90px;
+            object-fit:contain;
+        "
     >
 
 
-    <h3>
+    <h3
+        style="
+            margin-top:12px;
+            font-size:24px;
+        "
+    >
         PULSO MARINO
     </h3>
 
 
-    <p class="footer-slogan">
+    <p
+        class="footer-slogan"
+        style="
+            margin-top:8px;
+            color:#9ff4ff;
+        "
+    >
         Del mar a tu mesa. 🦐
     </p>
 
@@ -3970,6 +4424,13 @@ textarea{
         href="https://wa.me/50238363797"
         target="_blank"
         class="footer-whatsapp"
+        style="
+            display:inline-block;
+            margin-top:20px;
+            color:white;
+            text-decoration:none;
+            font-weight:900;
+        "
     >
 
         💬 WhatsApp 3836-3797
@@ -3977,7 +4438,16 @@ textarea{
     </a>
 
 
-    <div class="footer-bottom">
+    <div
+        class="footer-bottom"
+        style="
+            margin-top:35px;
+            padding-top:20px;
+            border-top:1px solid rgba(255,255,255,.15);
+            color:#9bb1c4;
+            font-size:12px;
+        "
+    >
 
         © 2026 Pulso Marino
         ·
@@ -3989,23 +4459,23 @@ textarea{
 
 
 <!-- =========================================================
-     OVERLAY
+OVERLAY
 ========================================================= -->
 
 <div
-    class="overlay"
-    id="overlay"
-    onclick="cerrarCarrito()"
+class="overlay"
+id="overlay"
+onclick="cerrarCarrito()"
 ></div>
 
 
 <!-- =========================================================
-     CARRITO LATERAL
+CARRITO LATERAL
 ========================================================= -->
 
 <aside
-    class="cart-panel"
-    id="cartPanel"
+class="cart-panel"
+id="cartPanel"
 >
 
     <div class="cart-panel-header">
@@ -4019,7 +4489,9 @@ textarea{
             class="close-cart"
             onclick="cerrarCarrito()"
         >
+
             ✕
+
         </button>
 
     </div>
@@ -4040,6 +4512,16 @@ textarea{
     </div>
 
 
+    <button
+        class="add-another-ceviche"
+        onclick="agregarOtroQ35DesdeCarrito()"
+    >
+
+        🦐 AGREGAR OTRO CEVICHE Q35
+
+    </button>
+
+
     <div class="order-total">
 
         <span>
@@ -4056,6 +4538,7 @@ textarea{
 
     <button
         class="whatsapp-button"
+        style="margin-top:15px;"
         onclick="
             cerrarCarrito();
 
@@ -4075,15 +4558,12 @@ textarea{
 
 
 <!-- =========================================================
-     MODAL DE PERSONALIZACION
+MODAL DE PERSONALIZACION
 ========================================================= -->
 
 <div
-    class="custom-modal"
-    id="customModal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="customModalTitle"
+class="custom-modal"
+id="customModal"
 >
 
     <div class="custom-modal-card">
@@ -4110,9 +4590,7 @@ textarea{
         <div class="custom-modal-body">
 
 
-            <!-- =================================================
-                 PERSONALIZACION
-            ================================================== -->
+            <!-- PASO CEVICHE -->
 
             <div id="stepCeviche">
 
@@ -4121,7 +4599,9 @@ textarea{
                     class="step-indicator"
                     id="stepIndicator"
                 >
+
                     PASO 1 · PERSONALIZACIÓN
+
                 </div>
 
 
@@ -4201,7 +4681,6 @@ textarea{
 
                         </div>
 
-
                     </div>
 
                 </div>
@@ -4261,7 +4740,6 @@ textarea{
                             </label>
 
                         </div>
-
 
                     </div>
 
@@ -4323,7 +4801,6 @@ textarea{
 
                         </div>
 
-
                     </div>
 
                 </div>
@@ -4384,7 +4861,6 @@ textarea{
 
                         </div>
 
-
                     </div>
 
                 </div>
@@ -4414,15 +4890,12 @@ textarea{
 
                     </button>
 
-
                 </div>
 
             </div>
 
 
-            <!-- =================================================
-                 BEBIDAS
-            ================================================== -->
+            <!-- PASO BEBIDAS -->
 
             <div
                 id="stepBebidas"
@@ -4459,8 +4932,7 @@ textarea{
                         "
                     >
 
-                        Puedes agregar una o varias bebidas
-                        antes de terminar tu pedido.
+                        Puedes seleccionar una o varias.
 
                     </p>
 
@@ -4548,7 +5020,7 @@ textarea{
                         </div>
 
 
-                        <!-- COCA-COLA -->
+                        <!-- COCA -->
 
                         <div
                             class="modal-beverage"
@@ -4585,7 +5057,6 @@ textarea{
                             </div>
 
                         </div>
-
 
                     </div>
 
@@ -4628,12 +5099,12 @@ textarea{
 
 
 <!-- =========================================================
-     OFERTA
+OFERTA
 ========================================================= -->
 
 <div
-    class="offer-modal"
-    id="offerModal"
+class="offer-modal"
+id="offerModal"
 >
 
     <div class="offer-card">
@@ -4641,13 +5112,16 @@ textarea{
 
         <div class="offer-header">
 
+
             <div class="offer-icon">
                 🦐
             </div>
 
 
             <div class="offer-small">
+
                 ¡APROVECHA!
+
             </div>
 
 
@@ -4666,6 +5140,7 @@ textarea{
 
         <div class="offer-body">
 
+
             <p>
 
                 Ya elegiste tu primer
@@ -4674,8 +5149,8 @@ textarea{
 
                 <br><br>
 
-                Agrega otro por solamente
-                <strong>Q25 más</strong>.
+                Puedes llevarte otro por
+                solamente <strong>Q25 más</strong>.
 
             </p>
 
@@ -4721,21 +5196,19 @@ textarea{
 <script>
 
 /* =========================================================
-   CARRITO
+CARRITO
 ========================================================= */
 
 let carrito = [];
 
 
 /* =========================================================
-   FLUJO DE COMPRA
+FLUJO ACTUAL
 ========================================================= */
 
 let flujoCompra = {
 
     modo:"normal",
-
-    cevichesCompletados:0,
 
     cevichesConfigurados:[],
 
@@ -4745,7 +5218,7 @@ let flujoCompra = {
 
 
 /* =========================================================
-   NAVBAR
+NAVBAR
 ========================================================= */
 
 window.addEventListener(
@@ -4779,57 +5252,57 @@ window.addEventListener(
 
 
 /* =========================================================
-   REVEAL
+PRODUCTOS
 ========================================================= */
 
 const observer =
-    new IntersectionObserver(
-        entries => {
+new IntersectionObserver(
+    entries => {
 
-            entries.forEach(
-                entry => {
+        entries.forEach(
+            entry => {
 
-                    if(
-                        entry.isIntersecting
-                    ){
+                if(
+                    entry.isIntersecting
+                ){
 
-                        entry.target.classList.add(
-                            "visible"
-                        );
+                    entry.target.classList.add(
+                        "visible"
+                    );
 
-                        observer.unobserve(
-                            entry.target
-                        );
-
-                    }
+                    observer.unobserve(
+                        entry.target
+                    );
 
                 }
-            );
 
-        },
-        {
-            threshold:.15
-        }
-    );
-
-
-document
-.querySelectorAll(
-    ".reveal"
-)
-.forEach(
-    element => {
-
-        observer.observe(
-            element
+            }
         );
 
+    },
+    {
+        threshold:.15
     }
 );
 
 
+document
+    .querySelectorAll(
+        ".reveal"
+    )
+    .forEach(
+        element => {
+
+            observer.observe(
+                element
+            );
+
+        }
+    );
+
+
 /* =========================================================
-   TIBURON
+TIBURON
 ========================================================= */
 
 const shark =
@@ -4927,18 +5400,18 @@ setInterval(
     () => {
 
         document
-        .querySelectorAll(
-            ".fish.eaten"
-        )
-        .forEach(
-            pez => {
+            .querySelectorAll(
+                ".fish.eaten"
+            )
+            .forEach(
+                pez => {
 
-                pez.classList.remove(
-                    "eaten"
-                );
+                    pez.classList.remove(
+                        "eaten"
+                    );
 
-            }
-        );
+                }
+            );
 
 
         pecesDisponibles =
@@ -4954,16 +5427,14 @@ setInterval(
 
 
 /* =========================================================
-   ABRIR COMPRA NORMAL
+RESETEAR FLUJO
 ========================================================= */
 
-function abrirPersonalizacionNormal(){
+function resetearFlujo(){
 
     flujoCompra = {
 
         modo:"normal",
-
-        cevichesCompletados:0,
 
         cevichesConfigurados:[],
 
@@ -4974,41 +5445,76 @@ function abrirPersonalizacionNormal(){
 
     limpiarOpcionesModal();
 
+}
 
-    mostrarPasoCeviche();
+
+/* =========================================================
+ABRIR COMPRA NORMAL
+========================================================= */
+
+function abrirPersonalizacionNormal(){
+
+    resetearFlujo();
 
 
     document
-    .getElementById(
-        "customModalTitle"
-    )
-    .textContent =
+        .getElementById(
+            "stepCeviche"
+        )
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "stepBebidas"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "customModalTitle"
+        )
+        .textContent =
         "Personaliza tu Mordisco del Mar";
 
 
     document
-    .getElementById(
-        "customModalSubtitle"
-    )
-    .textContent =
+        .getElementById(
+            "customModalSubtitle"
+        )
+        .textContent =
         "Elige cómo quieres disfrutarlo antes de continuar.";
 
 
     document
-    .getElementById(
-        "stepIndicator"
-    )
-    .textContent =
+        .getElementById(
+            "stepIndicator"
+        )
+        .textContent =
         "PASO 1 · PERSONALIZACIÓN";
 
 
+    abrirModal();
+
+}
+
+
+/* =========================================================
+ABRIR MODAL
+========================================================= */
+
+function abrirModal(){
+
     document
-    .getElementById(
-        "customModal"
-    )
-    .classList.add(
-        "active"
-    );
+        .getElementById(
+            "customModal"
+        )
+        .classList.add(
+            "active"
+        );
 
 
     document.body.style.overflow =
@@ -5018,171 +5524,115 @@ function abrirPersonalizacionNormal(){
 
 
 /* =========================================================
-   MOSTRAR PASO CEVICHE
+CERRAR MODAL VISUAL
 ========================================================= */
 
-function mostrarPasoCeviche(){
+function cerrarModalVisual(){
 
     document
-    .getElementById(
-        "stepCeviche"
-    )
-    .style.display =
-        "block";
-
-
-    document
-    .getElementById(
-        "stepBebidas"
-    )
-    .style.display =
-        "none";
+        .getElementById(
+            "customModal"
+        )
+        .classList.remove(
+            "active"
+        );
 
 }
 
 
 /* =========================================================
-   MOSTRAR PASO BEBIDAS
-========================================================= */
-
-function mostrarPasoBebidas(){
-
-    document
-    .getElementById(
-        "stepCeviche"
-    )
-    .style.display =
-        "none";
-
-
-    document
-    .getElementById(
-        "stepBebidas"
-    )
-    .style.display =
-        "block";
-
-
-    document
-    .getElementById(
-        "customModalTitle"
-    )
-    .textContent =
-        "Agrega tus bebidas";
-
-
-    document
-    .getElementById(
-        "customModalSubtitle"
-    )
-    .textContent =
-        "Elige una o varias bebidas para acompañar tu pedido.";
-
-
-    document
-    .getElementById(
-        "bebidaStepIndicator"
-    )
-    .textContent =
-        "PASO 2 · BEBIDAS";
-
-
-    document
-    .getElementById(
-        "customModal"
-    )
-    .classList.add(
-        "active"
-    );
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-/* =========================================================
-   LIMPIAR MODAL
+LIMPIAR OPCIONES
 ========================================================= */
 
 function limpiarOpcionesModal(){
 
     document
-    .querySelectorAll(
-        'input[name="hierbaModal"]'
-    )
-    .forEach(
-        input => {
+        .querySelectorAll(
+            'input[name="hierbaModal"]'
+        )
+        .forEach(
+            input => {
 
-            input.checked = false;
+                input.checked = false;
 
-        }
-    );
-
-
-    document
-    .querySelectorAll(
-        'input[name="aguacateModal"]'
-    )
-    .forEach(
-        input => {
-
-            input.checked = false;
-
-        }
-    );
+            }
+        );
 
 
     document
-    .querySelectorAll(
-        'input[name="acompananteModal"]'
-    )
-    .forEach(
-        input => {
+        .querySelectorAll(
+            'input[name="aguacateModal"]'
+        )
+        .forEach(
+            input => {
 
-            input.checked = false;
+                input.checked = false;
 
-        }
-    );
-
-
-    document
-    .querySelectorAll(
-        'input[name="pepinoModal"]'
-    )
-    .forEach(
-        input => {
-
-            input.checked = false;
-
-        }
-    );
+            }
+        );
 
 
     document
-    .querySelectorAll(
-        ".modal-beverage"
-    )
-    .forEach(
-        bebida => {
+        .querySelectorAll(
+            'input[name="acompananteModal"]'
+        )
+        .forEach(
+            input => {
 
-            bebida.classList.remove(
-                "selected"
-            );
+                input.checked = false;
 
-        }
-    );
+            }
+        );
 
 
-    flujoCompra.bebidasSeleccionadas =
-        [];
+    document
+        .querySelectorAll(
+            'input[name="pepinoModal"]'
+        )
+        .forEach(
+            input => {
+
+                input.checked = false;
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            ".modal-beverage"
+        )
+        .forEach(
+            bebida => {
+
+                bebida.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
 
 }
 
 
 /* =========================================================
-   CONTINUAR DESDE CEVICHE
+CERRAR PERSONALIZACION
+========================================================= */
+
+function cerrarPersonalizacion(){
+
+    cerrarModalVisual();
+
+    document.body.style.overflow =
+        "";
+
+    resetearFlujo();
+
+}
+
+
+/* =========================================================
+CONTINUAR DESDE CEVICHE
 ========================================================= */
 
 function continuarDesdeCeviche(){
@@ -5218,6 +5668,7 @@ function continuarDesdeCeviche(){
         );
 
         return;
+
     }
 
 
@@ -5228,6 +5679,7 @@ function continuarDesdeCeviche(){
         );
 
         return;
+
     }
 
 
@@ -5238,6 +5690,7 @@ function continuarDesdeCeviche(){
         );
 
         return;
+
     }
 
 
@@ -5248,34 +5701,21 @@ function continuarDesdeCeviche(){
         );
 
         return;
+
     }
 
 
-    /*
-       Q35 para compra normal.
-       Q25 solamente para el segundo
-       ceviche después de aceptar la oferta.
-    */
-
-    let precioCeviche = 35;
-
-
-    if(
+    const precio =
         flujoCompra.modo === "oferta"
-    ){
-
-        precioCeviche = 25;
-
-    }
+        ? 25
+        : 35;
 
 
     flujoCompra.cevichesConfigurados.push({
 
-        nombre:
-            "Mordisco del Mar",
+        nombre:"Mordisco del Mar",
 
-        precio:
-            precioCeviche,
+        precio:precio,
 
         hierba:
             hierbaInput.value,
@@ -5292,18 +5732,17 @@ function continuarDesdeCeviche(){
     });
 
 
-    flujoCompra.cevichesCompletados++;
-
-
     /*
-       PRIMER CEVICHE NORMAL
-       -> aparece oferta
+       PRIMER Q35:
+
+       Se muestra la promoción.
     */
 
     if(
-        flujoCompra.modo === "normal" &&
-        flujoCompra.cevichesCompletados === 1
+        flujoCompra.modo === "normal"
     ){
+
+        cerrarModalVisual();
 
         mostrarOfertaSegundo();
 
@@ -5313,53 +5752,35 @@ function continuarDesdeCeviche(){
 
 
     /*
-       SEGUNDO CEVICHE DE Q25
-       -> bebidas
+       SEGUNDO Q25:
+
+       Pasamos a bebidas.
     */
 
     if(
-        flujoCompra.modo === "oferta" &&
-        flujoCompra.cevichesCompletados === 2
+        flujoCompra.modo === "oferta"
     ){
 
         mostrarPasoBebidas();
 
-        return;
-
     }
-
-
-    /*
-       Seguridad
-    */
-
-    mostrarPasoBebidas();
 
 }
 
 
 /* =========================================================
-   MOSTRAR OFERTA
+MOSTRAR OFERTA
 ========================================================= */
 
 function mostrarOfertaSegundo(){
 
     document
-    .getElementById(
-        "customModal"
-    )
-    .classList.remove(
-        "active"
-    );
-
-
-    document
-    .getElementById(
-        "offerModal"
-    )
-    .classList.add(
-        "active"
-    );
+        .getElementById(
+            "offerModal"
+        )
+        .classList.add(
+            "active"
+        );
 
 
     document.body.style.overflow =
@@ -5369,24 +5790,30 @@ function mostrarOfertaSegundo(){
 
 
 /* =========================================================
-   ACEPTAR OFERTA
+CERRAR OFERTA
+========================================================= */
+
+function cerrarOferta(){
+
+    document
+        .getElementById(
+            "offerModal"
+        )
+        .classList.remove(
+            "active"
+        );
+
+}
+
+
+/* =========================================================
+ACEPTAR OFERTA
 ========================================================= */
 
 function aceptarOferta(){
 
-    document
-    .getElementById(
-        "offerModal"
-    )
-    .classList.remove(
-        "active"
-    );
+    cerrarOferta();
 
-
-    /*
-       Ahora estamos configurando
-       UN SOLO segundo ceviche de Q25.
-    */
 
     flujoCompra.modo =
         "oferta";
@@ -5395,67 +5822,63 @@ function aceptarOferta(){
     limpiarOpcionesModal();
 
 
-    mostrarPasoCeviche();
+    document
+        .getElementById(
+            "stepCeviche"
+        )
+        .style.display =
+        "block";
 
 
     document
-    .getElementById(
-        "customModalTitle"
-    )
-    .textContent =
+        .getElementById(
+            "stepBebidas"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "customModalTitle"
+        )
+        .textContent =
         "Personaliza tu segundo ceviche";
 
 
     document
-    .getElementById(
-        "customModalSubtitle"
-    )
-    .textContent =
-        "Este segundo Mordisco del Mar cuesta solamente Q25.";
+        .getElementById(
+            "customModalSubtitle"
+        )
+        .textContent =
+        "Tu segundo Mordisco del Mar cuesta solamente Q25.";
 
 
     document
-    .getElementById(
-        "stepIndicator"
-    )
-    .textContent =
+        .getElementById(
+            "stepIndicator"
+        )
+        .textContent =
         "OFERTA · SEGUNDO CEVICHE";
 
 
-    document
-    .getElementById(
-        "customModal"
-    )
-    .classList.add(
-        "active"
-    );
-
-
-    document.body.style.overflow =
-        "hidden";
+    abrirModal();
 
 }
 
 
 /* =========================================================
-   RECHAZAR OFERTA
+RECHAZAR OFERTA
 ========================================================= */
 
 function rechazarOferta(){
 
-    document
-    .getElementById(
-        "offerModal"
-    )
-    .classList.remove(
-        "active"
-    );
+    cerrarOferta();
 
 
-    /*
-       El primer Q35 sigue guardado
-       temporalmente.
-    */
+    flujoCompra.modo =
+        "normal";
+
 
     mostrarPasoBebidas();
 
@@ -5463,7 +5886,63 @@ function rechazarOferta(){
 
 
 /* =========================================================
-   BEBIDAS DEL MODAL
+MOSTRAR BEBIDAS
+========================================================= */
+
+function mostrarPasoBebidas(){
+
+    cerrarOferta();
+
+    cerrarModalVisual();
+
+
+    document
+        .getElementById(
+            "stepCeviche"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "stepBebidas"
+        )
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "customModalTitle"
+        )
+        .textContent =
+        "Agrega tus bebidas";
+
+
+    document
+        .getElementById(
+            "customModalSubtitle"
+        )
+        .textContent =
+        "Elige una o varias bebidas para acompañar tu pedido.";
+
+
+    document
+        .getElementById(
+            "bebidaStepIndicator"
+        )
+        .textContent =
+        "PASO 2 · BEBIDAS";
+
+
+    abrirModal();
+
+}
+
+
+/* =========================================================
+SELECCIONAR BEBIDA
 ========================================================= */
 
 function alternarBebidaModal(
@@ -5498,11 +5977,11 @@ function alternarBebidaModal(
 
         flujoCompra.bebidasSeleccionadas.push({
 
-            nombre,
+            nombre:nombre,
 
-            precio,
+            precio:precio,
 
-            emoji
+            emoji:emoji
 
         });
 
@@ -5517,97 +5996,87 @@ function alternarBebidaModal(
 
 
 /* =========================================================
-   VOLVER DE BEBIDAS
+VOLVER A CEVICHE
 ========================================================= */
 
 function volverACeviche(){
 
-    /*
-       Si estamos configurando el segundo Q25,
-       volvemos al segundo ceviche.
-
-       Si es compra normal,
-       volvemos al primer ceviche.
-    */
-
-    mostrarPasoCeviche();
+    document
+        .getElementById(
+            "stepBebidas"
+        )
+        .style.display =
+        "none";
 
 
     document
-    .querySelectorAll(
-        ".modal-beverage"
-    )
-    .forEach(
-        bebida => {
-
-            bebida.classList.remove(
-                "selected"
-            );
-
-        }
-    );
+        .getElementById(
+            "stepCeviche"
+        )
+        .style.display =
+        "block";
 
 
-    flujoCompra.bebidasSeleccionadas =
-        [];
+    limpiarOpcionesModal();
 
 
     if(
         flujoCompra.modo === "oferta"
     ){
 
-        limpiarOpcionesModal();
-
-
         document
-        .getElementById(
-            "customModalTitle"
-        )
-        .textContent =
+            .getElementById(
+                "customModalTitle"
+            )
+            .textContent =
             "Personaliza tu segundo ceviche";
 
 
         document
-        .getElementById(
-            "customModalSubtitle"
-        )
-        .textContent =
-            "Este segundo Mordisco del Mar cuesta solamente Q25.";
+            .getElementById(
+                "customModalSubtitle"
+            )
+            .textContent =
+            "Tu segundo Mordisco del Mar cuesta solamente Q25.";
 
 
         document
-        .getElementById(
-            "stepIndicator"
-        )
-        .textContent =
+            .getElementById(
+                "stepIndicator"
+            )
+            .textContent =
             "OFERTA · SEGUNDO CEVICHE";
 
     }else{
 
-        limpiarOpcionesModal();
+        flujoCompra.cevichesConfigurados =
+            [];
+
+        flujoCompra.modo =
+            "normal";
 
 
         document
-        .getElementById(
-            "customModalTitle"
-        )
-        .textContent =
+            .getElementById(
+                "customModalTitle"
+            )
+            .textContent =
             "Personaliza tu Mordisco del Mar";
 
 
         document
-        .getElementById(
-            "customModalSubtitle"
-        )
-        .textContent =
+            .getElementById(
+                "customModalSubtitle"
+            )
+            .textContent =
             "Elige cómo quieres disfrutarlo antes de continuar.";
 
 
         document
-        .getElementById(
-            "stepIndicator"
-        )
-        .textContent =
+            .getElementById(
+                "stepIndicator"
+            )
+            .textContent =
             "PASO 1 · PERSONALIZACIÓN";
 
     }
@@ -5616,23 +6085,27 @@ function volverACeviche(){
 
 
 /* =========================================================
-   CONFIRMAR BEBIDAS
+CONFIRMAR BEBIDAS
 ========================================================= */
 
 function confirmarBebidas(){
 
-    /*
-       Agregamos cada ceviche configurado
-       exactamente una vez.
-    */
+    const productosAAgregar = [
+        ...flujoCompra.cevichesConfigurados
+    ];
 
-    flujoCompra.cevichesConfigurados.forEach(
+
+    const bebidasAAgregar = [
+        ...flujoCompra.bebidasSeleccionadas
+    ];
+
+
+    productosAAgregar.forEach(
         ceviche => {
 
             carrito.push({
 
-                tipo:
-                    "ceviche",
+                tipo:"ceviche",
 
                 nombre:
                     ceviche.nombre,
@@ -5663,11 +6136,7 @@ function confirmarBebidas(){
     );
 
 
-    /*
-       Agregamos las bebidas.
-    */
-
-    flujoCompra.bebidasSeleccionadas.forEach(
+    bebidasAAgregar.forEach(
         bebida => {
 
             agregarBebidaSinAbrir(
@@ -5680,7 +6149,14 @@ function confirmarBebidas(){
     );
 
 
-    cerrarPersonalizacion();
+    resetearFlujo();
+
+
+    cerrarModalVisual();
+
+
+    document.body.style.overflow =
+        "";
 
 
     actualizarTodo();
@@ -5722,56 +6198,7 @@ function confirmarBebidas(){
 
 
 /* =========================================================
-   CERRAR PERSONALIZACION
-========================================================= */
-
-function cerrarPersonalizacion(){
-
-    document
-    .getElementById(
-        "customModal"
-    )
-    .classList.remove(
-        "active"
-    );
-
-
-    document.body.style.overflow =
-        "";
-
-
-    flujoCompra = {
-
-        modo:"normal",
-
-        cevichesCompletados:0,
-
-        cevichesConfigurados:[],
-
-        bebidasSeleccionadas:[]
-
-    };
-
-
-    document
-    .querySelectorAll(
-        ".modal-beverage"
-    )
-    .forEach(
-        elemento => {
-
-            elemento.classList.remove(
-                "selected"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   BEBIDAS DESDE LA SECCION
+BEBIDAS DESDE MENU
 ========================================================= */
 
 function agregarBebida(
@@ -5821,11 +6248,11 @@ function agregarBebidaSinAbrir(
 
             tipo:"bebida",
 
-            nombre,
+            nombre:nombre,
 
-            precio,
+            precio:precio,
 
-            emoji,
+            emoji:emoji,
 
             cantidad:1
 
@@ -5837,10 +6264,21 @@ function agregarBebidaSinAbrir(
 
 
 /* =========================================================
-   CANTIDAD DE CEVICHES NORMALES
+REGLA PROMOCION
 ========================================================= */
 
-function contarCevichesNormales(){
+/*
+   Cada Q35 comprado genera
+   exactamente un derecho a Q25.
+
+   Ejemplos:
+
+   Q35 x1 -> Q25 máximo x1
+   Q35 x2 -> Q25 máximo x2
+   Q35 x3 -> Q25 máximo x3
+*/
+
+function obtenerCantidadQ35(){
 
     return carrito.reduce(
         (
@@ -5858,6 +6296,7 @@ function contarCevichesNormales(){
 
             }
 
+
             return total;
 
         },
@@ -5867,11 +6306,7 @@ function contarCevichesNormales(){
 }
 
 
-/* =========================================================
-   CANTIDAD DE PROMOCIONES
-========================================================= */
-
-function contarCevichesPromo(){
+function obtenerCantidadQ25(){
 
     return carrito.reduce(
         (
@@ -5889,6 +6324,7 @@ function contarCevichesPromo(){
 
             }
 
+
             return total;
 
         },
@@ -5898,8 +6334,23 @@ function contarCevichesPromo(){
 }
 
 
+/*
+   Cantidad de promociones restantes.
+*/
+
+function obtenerPromocionesDisponibles(){
+
+    return Math.max(
+        0,
+        obtenerCantidadQ35() -
+        obtenerCantidadQ25()
+    );
+
+}
+
+
 /* =========================================================
-   CAMBIAR CANTIDAD
+CAMBIAR CANTIDAD
 ========================================================= */
 
 function cambiarCantidad(
@@ -5920,66 +6371,133 @@ function cambiarCantidad(
         carrito[index];
 
 
-    /*
-       UN Q25 NO PUEDE SUBIR A 2.
-
-       La oferta solamente permite
-       una unidad de Q25 por cada
-       compra normal de Q35.
-    */
+    /* =====================================================
+       AUMENTAR
+    ===================================================== */
 
     if(
-        producto.tipo === "ceviche" &&
-        producto.precio === 25 &&
         cambio > 0
     ){
 
-        const normales =
-            contarCevichesNormales();
-
-
-        const promos =
-            contarCevichesPromo();
-
+        /*
+           Q25:
+           solamente puede aumentar
+           si existe otro Q35 disponible.
+        */
 
         if(
-            promos >= normales
+            producto.tipo === "ceviche" &&
+            producto.precio === 25
         ){
 
-            alert(
-                "🔥 Ese ceviche ya utiliza la oferta de Q25. Agrega otro Mordisco del Mar de Q35 para obtener otra oferta."
-            );
+            const promocionesDisponibles =
+                obtenerPromocionesDisponibles();
 
-            return;
+
+            if(
+                promocionesDisponibles <= 0
+            ){
+
+                alert(
+                    "🔥 Ya utilizaste todas tus promociones Q25. Agrega otro ceviche de Q35 para obtener otra promoción."
+                );
+
+                return;
+
+            }
 
         }
 
+
+        /*
+           Q35:
+           puede aumentar libremente.
+        */
+
+        producto.cantidad +=
+            cambio;
+
+
+        actualizarTodo();
+
+        return;
+
     }
 
 
-    producto.cantidad +=
-        cambio;
-
+    /* =====================================================
+       DISMINUIR
+    ===================================================== */
 
     if(
-        producto.cantidad <= 0
+        cambio < 0
     ){
 
-        carrito.splice(
-            index,
-            1
-        );
+        /*
+           Si disminuimos Q35,
+           verificamos que no deje más Q25
+           que Q35.
+        */
+
+        if(
+            producto.tipo === "ceviche" &&
+            producto.precio === 35
+        ){
+
+            const cantidadQ35Actual =
+                obtenerCantidadQ35();
+
+
+            const cantidadQ25Actual =
+                obtenerCantidadQ25();
+
+
+            const nuevaCantidadQ35 =
+                cantidadQ35Actual +
+                cambio;
+
+
+            if(
+                nuevaCantidadQ35 <
+                cantidadQ25Actual
+            ){
+
+                alert(
+                    "⚠️ Primero elimina un ceviche promocional de Q25 antes de reducir los ceviches de Q35."
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        producto.cantidad +=
+            cambio;
+
+
+        if(
+            producto.cantidad <= 0
+        ){
+
+            carrito.splice(
+                index,
+                1
+            );
+
+        }
+
+
+        actualizarTodo();
 
     }
-
-
-    actualizarTodo();
 
 }
 
 
 /* =========================================================
-   ELIMINAR
+ELIMINAR
 ========================================================= */
 
 function eliminarProducto(
@@ -5991,6 +6509,49 @@ function eliminarProducto(
     ){
 
         return;
+
+    }
+
+
+    const producto =
+        carrito[index];
+
+
+    /*
+       No permite eliminar Q35
+       si eso dejaría Q25 sin respaldo.
+    */
+
+    if(
+        producto.tipo === "ceviche" &&
+        producto.precio === 35
+    ){
+
+        const cantidadQ35Actual =
+            obtenerCantidadQ35();
+
+
+        const cantidadQ25Actual =
+            obtenerCantidadQ25();
+
+
+        const nuevaCantidadQ35 =
+            cantidadQ35Actual -
+            producto.cantidad;
+
+
+        if(
+            nuevaCantidadQ35 <
+            cantidadQ25Actual
+        ){
+
+            alert(
+                "⚠️ No puedes eliminar ese ceviche de Q35 porque tienes una promoción Q25 asociada. Elimina primero el Q25 correspondiente."
+            );
+
+            return;
+
+        }
 
     }
 
@@ -6007,7 +6568,7 @@ function eliminarProducto(
 
 
 /* =========================================================
-   ACTUALIZAR TODO
+ACTUALIZAR TODO
 ========================================================= */
 
 function actualizarTodo(){
@@ -6022,7 +6583,7 @@ function actualizarTodo(){
 
 
 /* =========================================================
-   CONTADOR
+CONTADOR
 ========================================================= */
 
 function actualizarContador(){
@@ -6041,17 +6602,17 @@ function actualizarContador(){
 
 
     document
-    .getElementById(
-        "cartNumber"
-    )
-    .textContent =
+        .getElementById(
+            "cartNumber"
+        )
+        .textContent =
         cantidad;
 
 }
 
 
 /* =========================================================
-   TOTAL
+TOTAL
 ========================================================= */
 
 function calcularTotal(){
@@ -6076,7 +6637,7 @@ function calcularTotal(){
 
 
 /* =========================================================
-   DETALLE
+DETALLE
 ========================================================= */
 
 function crearDetalleProducto(
@@ -6106,7 +6667,7 @@ function crearDetalleProducto(
 
 
 /* =========================================================
-   CONTROLES PRODUCTO
+CONTROLES
 ========================================================= */
 
 function crearControlesProducto(
@@ -6117,10 +6678,22 @@ function crearControlesProducto(
         carrito[index];
 
 
-    const bloquearMas =
+    let bloquearMas = false;
+
+
+    /*
+       SOLO Q25 necesita límite.
+    */
+
+    if(
         producto.tipo === "ceviche" &&
-        producto.precio === 25 &&
-        producto.cantidad >= 1;
+        producto.precio === 25
+    ){
+
+        bloquearMas =
+            obtenerPromocionesDisponibles() <= 0;
+
+    }
 
 
     return `
@@ -6144,19 +6717,24 @@ function crearControlesProducto(
                 class="qty-button"
                 onclick="cambiarCantidad(${index},1)"
                 ${bloquearMas ? "disabled" : ""}
+                title="${
+                    bloquearMas
+                    ? "Agrega otro ceviche de Q35 para obtener otra promoción."
+                    : "Aumentar cantidad"
+                }"
             >
                 +
             </button>
 
+
+            <button
+                class="qty-button delete-button"
+                onclick="eliminarProducto(${index})"
+            >
+                ×
+            </button>
+
         </div>
-
-
-        <button
-            class="qty-button delete-button"
-            onclick="eliminarProducto(${index})"
-        >
-            ×
-        </button>
 
     `;
 
@@ -6164,7 +6742,7 @@ function crearControlesProducto(
 
 
 /* =========================================================
-   RENDER LISTA
+RENDERIZAR
 ========================================================= */
 
 function renderizarLista(
@@ -6203,7 +6781,10 @@ function renderizarLista(
 
                         ${
                             producto.tipo === "bebida"
-                            ? (producto.emoji || "🥤")
+                            ? (
+                                producto.emoji ||
+                                "🥤"
+                            )
                             : "🦐"
                         }
 
@@ -6211,8 +6792,17 @@ function renderizarLista(
 
                         ${
                             producto.promo
-                            ? '<span style="color:#ff0878;font-size:11px;"> · OFERTA Q25</span>'
-                            : ''
+                            ? `
+                                <span
+                                    style="
+                                        color:#ff0878;
+                                        font-size:11px;
+                                    "
+                                >
+                                    · OFERTA Q25
+                                </span>
+                            `
+                            : ""
                         }
 
                     </div>
@@ -6231,14 +6821,22 @@ function renderizarLista(
                         style="margin-top:7px;"
                     >
 
-                        ${crearDetalleProducto(producto)}
+                        ${
+                            crearDetalleProducto(
+                                producto
+                            )
+                        }
 
                     </div>
 
                 </div>
 
 
-                ${crearControlesProducto(index)}
+                ${
+                    crearControlesProducto(
+                        index
+                    )
+                }
 
 
                 <div class="item-total">
@@ -6286,11 +6884,121 @@ function renderizarLista(
         totalDiv
     );
 
+
+    /*
+       INFORMACION DE PROMOCION
+    */
+
+    const cantidadQ35 =
+        obtenerCantidadQ35();
+
+
+    const cantidadQ25 =
+        obtenerCantidadQ25();
+
+
+    const disponibles =
+        obtenerPromocionesDisponibles();
+
+
+    if(
+        cantidadQ35 > 0
+    ){
+
+        const promoInfo =
+            document.createElement(
+                "div"
+            );
+
+
+        promoInfo.style.marginTop =
+            "15px";
+
+        promoInfo.style.padding =
+            "13px";
+
+        promoInfo.style.borderRadius =
+            "14px";
+
+        promoInfo.style.background =
+            "#fff7df";
+
+        promoInfo.style.color =
+            "#785d00";
+
+        promoInfo.style.fontSize =
+            "12px";
+
+        promoInfo.style.lineHeight =
+            "1.5";
+
+        promoInfo.style.fontWeight =
+            "700";
+
+
+        if(
+            disponibles > 0
+        ){
+
+            promoInfo.innerHTML = `
+
+                🔥 Tienes
+                <strong>
+                    ${disponibles}
+                </strong>
+
+                promoción${
+                    disponibles > 1
+                    ? "es"
+                    : ""
+                }
+
+                Q25 disponible${
+                    disponibles > 1
+                    ? "s"
+                    : ""
+                }.
+
+                <br>
+
+                Cada Q35 te permite obtener
+                un Q25 adicional.
+
+            `;
+
+        }else{
+
+            promoInfo.innerHTML = `
+
+                ✅ Ya utilizaste todas tus promociones disponibles.
+
+                <br>
+
+                ${cantidadQ35} Q35
+                →
+                ${cantidadQ25} Q25
+                promocional${
+                    cantidadQ25 > 1
+                    ? "es"
+                    : ""
+                }.
+
+            `;
+
+        }
+
+
+        contenedor.appendChild(
+            promoInfo
+        );
+
+    }
+
 }
 
 
 /* =========================================================
-   PEDIDO
+ACTUALIZAR PEDIDO
 ========================================================= */
 
 function actualizarPedido(){
@@ -6344,7 +7052,7 @@ function actualizarPedido(){
 
 
 /* =========================================================
-   CARRITO LATERAL
+ACTUALIZAR CARRITO
 ========================================================= */
 
 function actualizarCarrito(){
@@ -6402,27 +7110,48 @@ function actualizarCarrito(){
 
 
 /* =========================================================
-   ABRIR CARRITO
+AGREGAR OTRO Q35 DESDE CARRITO
+========================================================= */
+
+function agregarOtroQ35DesdeCarrito(){
+
+    cerrarCarrito();
+
+
+    setTimeout(
+        () => {
+
+            abrirPersonalizacionNormal();
+
+        },
+        250
+    );
+
+}
+
+
+/* =========================================================
+ABRIR CARRITO
 ========================================================= */
 
 function abrirCarrito(){
 
     document
-    .getElementById(
-        "cartPanel"
-    )
-    .classList.add(
-        "active"
-    );
+        .getElementById(
+            "cartPanel"
+        )
+        .classList.add(
+            "active"
+        );
 
 
     document
-    .getElementById(
-        "overlay"
-    )
-    .classList.add(
-        "active"
-    );
+        .getElementById(
+            "overlay"
+        )
+        .classList.add(
+            "active"
+        );
 
 
     document.body.style.overflow =
@@ -6432,27 +7161,27 @@ function abrirCarrito(){
 
 
 /* =========================================================
-   CERRAR CARRITO
+CERRAR CARRITO
 ========================================================= */
 
 function cerrarCarrito(){
 
     document
-    .getElementById(
-        "cartPanel"
-    )
-    .classList.remove(
-        "active"
-    );
+        .getElementById(
+            "cartPanel"
+        )
+        .classList.remove(
+            "active"
+        );
 
 
     document
-    .getElementById(
-        "overlay"
-    )
-    .classList.remove(
-        "active"
-    );
+        .getElementById(
+            "overlay"
+        )
+        .classList.remove(
+            "active"
+        );
 
 
     document.body.style.overflow =
@@ -6462,7 +7191,7 @@ function cerrarCarrito(){
 
 
 /* =========================================================
-   WHATSAPP
+WHATSAPP
 ========================================================= */
 
 function enviarPedido(){
@@ -6477,12 +7206,12 @@ function enviarPedido(){
 
 
         document
-        .getElementById(
-            "ceviches"
-        )
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+            .getElementById(
+                "ceviches"
+            )
+            .scrollIntoView({
+                behavior:"smooth"
+            });
 
 
         return;
@@ -6492,29 +7221,29 @@ function enviarPedido(){
 
     const nombre =
         document
-        .getElementById(
-            "nombre"
-        )
-        .value
-        .trim();
+            .getElementById(
+                "nombre"
+            )
+            .value
+            .trim();
 
 
     const direccion =
         document
-        .getElementById(
-            "direccion"
-        )
-        .value
-        .trim();
+            .getElementById(
+                "direccion"
+            )
+            .value
+            .trim();
 
 
     const referencia =
         document
-        .getElementById(
-            "referencia"
-        )
-        .value
-        .trim();
+            .getElementById(
+                "referencia"
+            )
+            .value
+            .trim();
 
 
     if(!nombre){
@@ -6525,10 +7254,10 @@ function enviarPedido(){
 
 
         document
-        .getElementById(
-            "nombre"
-        )
-        .focus();
+            .getElementById(
+                "nombre"
+            )
+            .focus();
 
 
         return;
@@ -6544,10 +7273,10 @@ function enviarPedido(){
 
 
         document
-        .getElementById(
-            "direccion"
-        )
-        .focus();
+            .getElementById(
+                "direccion"
+            )
+            .focus();
 
 
         return;
@@ -6563,10 +7292,10 @@ function enviarPedido(){
 
 
         document
-        .getElementById(
-            "referencia"
-        )
-        .focus();
+            .getElementById(
+                "referencia"
+            )
+            .focus();
 
 
         return;
@@ -6597,17 +7326,25 @@ function enviarPedido(){
         "🧾 *PEDIDO*\n\n";
 
 
-    const promos =
-        contarCevichesPromo();
+    const cantidadPromo =
+        obtenerCantidadQ25();
 
 
     if(
-        promos > 0
+        cantidadPromo > 0
     ){
 
         mensaje +=
 
-            "🔥 *OFERTA: SEGUNDO CEVICHE POR Q25*\n\n";
+            "🔥 *OFERTA: " +
+            cantidadPromo +
+            " CEVICHE" +
+            (
+                cantidadPromo > 1
+                ? "S"
+                : ""
+            ) +
+            " Q25*\n\n";
 
     }
 
@@ -6622,9 +7359,10 @@ function enviarPedido(){
 
             const icono =
                 producto.tipo === "bebida"
-
-                ? (producto.emoji || "🥤")
-
+                ? (
+                    producto.emoji ||
+                    "🥤"
+                )
                 : "🦐";
 
 
@@ -6730,57 +7468,57 @@ function enviarPedido(){
 
 
 /* =========================================================
-   CERRAR MODAL HACIENDO CLICK FUERA
+CERRAR MODAL FUERA
 ========================================================= */
 
 document
-.getElementById(
-    "customModal"
-)
-.addEventListener(
-    "click",
-    event => {
+    .getElementById(
+        "customModal"
+    )
+    .addEventListener(
+        "click",
+        event => {
 
-        if(
-            event.target.id ===
-            "customModal"
-        ){
+            if(
+                event.target.id ===
+                "customModal"
+            ){
 
-            cerrarPersonalizacion();
+                cerrarPersonalizacion();
+
+            }
 
         }
-
-    }
-);
+    );
 
 
 /* =========================================================
-   CERRAR OFERTA FUERA
+CERRAR OFERTA FUERA
 ========================================================= */
 
 document
-.getElementById(
-    "offerModal"
-)
-.addEventListener(
-    "click",
-    event => {
+    .getElementById(
+        "offerModal"
+    )
+    .addEventListener(
+        "click",
+        event => {
 
-        if(
-            event.target.id ===
-            "offerModal"
-        ){
+            if(
+                event.target.id ===
+                "offerModal"
+            ){
 
-            rechazarOferta();
+                rechazarOferta();
+
+            }
 
         }
-
-    }
-);
+    );
 
 
 /* =========================================================
-   ESC
+ESC
 ========================================================= */
 
 document.addEventListener(
@@ -6788,21 +7526,14 @@ document.addEventListener(
     event => {
 
         if(
-            event.key ===
-            "Escape"
+            event.key === "Escape"
         ){
 
             cerrarCarrito();
 
             cerrarPersonalizacion();
 
-            document
-            .getElementById(
-                "offerModal"
-            )
-            .classList.remove(
-                "active"
-            );
+            cerrarOferta();
 
         }
 
@@ -6811,7 +7542,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   INICIAR
+INICIAR
 ========================================================= */
 
 actualizarTodo();
@@ -6820,4 +7551,3 @@ actualizarTodo();
 
 </body>
 </html>
-```
