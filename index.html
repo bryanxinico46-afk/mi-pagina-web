@@ -1,4 +1,4 @@
-html
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -4856,6 +4856,66 @@ id="customModal"
                 </div>
 
 
+                <!-- CARACOLES -->
+
+                <div class="custom-option-group">
+
+                    <div class="custom-option-title">
+
+                        🐌 ¿Quieres caracoles?
+
+                    </div>
+
+
+                    <div class="custom-options">
+
+
+                        <div class="custom-option">
+
+                            <input
+                                type="radio"
+                                id="caracolesSi"
+                                name="caracolesModal"
+                                value="Sí"
+                            >
+
+
+                            <label
+                                for="caracolesSi"
+                            >
+
+                                🐌 Sí, con caracoles
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="custom-option">
+
+                            <input
+                                type="radio"
+                                id="caracolesNo"
+                                name="caracolesModal"
+                                value="No"
+                            >
+
+
+                            <label
+                                for="caracolesNo"
+                            >
+
+                                ❌ No, sin caracoles
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
                 <div class="modal-actions">
 
 
@@ -5184,6 +5244,19 @@ id="offerModal"
 
 
 <script>
+
+/* =========================================================
+CONFIGURACION DE PROMOCION
+
+   Cambia a "true" para reactivar la
+   promoción del segundo ceviche a Q25.
+   Mientras esté en "false", cada ceviche
+   cuesta Q35 y el modal de oferta
+   no se muestra.
+========================================================= */
+
+const PROMOCION_ACTIVA = false;
+
 
 /* =========================================================
 CARRITO
@@ -5590,6 +5663,19 @@ function limpiarOpcionesModal(){
 
     document
         .querySelectorAll(
+            'input[name="caracolesModal"]'
+        )
+        .forEach(
+            input => {
+
+                input.checked = false;
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
             ".modal-beverage"
         )
         .forEach(
@@ -5651,6 +5737,12 @@ function continuarDesdeCeviche(){
         );
 
 
+    const caracolesInput =
+        document.querySelector(
+            'input[name="caracolesModal"]:checked'
+        );
+
+
     if(!hierbaInput){
 
         alert(
@@ -5695,6 +5787,17 @@ function continuarDesdeCeviche(){
     }
 
 
+    if(!caracolesInput){
+
+        alert(
+            "🐌 Indica si quieres caracoles."
+        );
+
+        return;
+
+    }
+
+
     const precio =
         flujoCompra.modo === "oferta"
         ? 25
@@ -5717,7 +5820,10 @@ function continuarDesdeCeviche(){
             acompananteInput.value,
 
         pepino:
-            pepinoInput.value
+            pepinoInput.value,
+
+        caracoles:
+            caracolesInput.value
 
     });
 
@@ -5725,7 +5831,10 @@ function continuarDesdeCeviche(){
     /*
        PRIMER Q35:
 
-       Se muestra la promoción.
+       Si la promoción está activa,
+       se muestra la oferta del segundo
+       ceviche. Si está desactivada,
+       se pasa directo a bebidas.
     */
 
     if(
@@ -5734,7 +5843,19 @@ function continuarDesdeCeviche(){
 
         cerrarModalVisual();
 
-        mostrarOfertaSegundo();
+
+        if(
+            PROMOCION_ACTIVA
+        ){
+
+            mostrarOfertaSegundo();
+
+        }else{
+
+            mostrarPasoBebidas();
+
+        }
+
 
         return;
 
@@ -5763,6 +5884,17 @@ MOSTRAR OFERTA
 ========================================================= */
 
 function mostrarOfertaSegundo(){
+
+    if(
+        !PROMOCION_ACTIVA
+    ){
+
+        mostrarPasoBebidas();
+
+        return;
+
+    }
+
 
     document
         .getElementById(
@@ -5801,6 +5933,15 @@ ACEPTAR OFERTA
 ========================================================= */
 
 function aceptarOferta(){
+
+    if(
+        !PROMOCION_ACTIVA
+    ){
+
+        return;
+
+    }
+
 
     cerrarOferta();
 
@@ -6011,7 +6152,8 @@ function volverACeviche(){
 
 
     if(
-        flujoCompra.modo === "oferta"
+        flujoCompra.modo === "oferta" &&
+        PROMOCION_ACTIVA
     ){
 
         document
@@ -6117,6 +6259,9 @@ function confirmarBebidas(){
 
                 pepino:
                     ceviche.pepino,
+
+                caracoles:
+                    ceviche.caracoles,
 
                 cantidad:1
 
@@ -6255,18 +6400,15 @@ function agregarBebidaSinAbrir(
 
 /* =========================================================
 REGLA PROMOCION
-========================================================= */
 
-/*
+   Estas funciones se conservan
+   para poder reactivar la promoción
+   más adelante, cambiando
+   PROMOCION_ACTIVA a "true".
+
    Cada Q35 comprado genera
    exactamente un derecho a Q25.
-
-   Ejemplos:
-
-   Q35 x1 -> Q25 máximo x1
-   Q35 x2 -> Q25 máximo x2
-   Q35 x3 -> Q25 máximo x3
-*/
+========================================================= */
 
 function obtenerCantidadQ35(){
 
@@ -6330,6 +6472,15 @@ function obtenerCantidadQ25(){
 
 function obtenerPromocionesDisponibles(){
 
+    if(
+        !PROMOCION_ACTIVA
+    ){
+
+        return 0;
+
+    }
+
+
     return Math.max(
         0,
         obtenerCantidadQ35() -
@@ -6372,7 +6523,8 @@ function cambiarCantidad(
         /*
            Q25:
            solamente puede aumentar
-           si existe otro Q35 disponible.
+           si existe otro Q35 disponible
+           y la promoción está activa.
         */
 
         if(
@@ -6426,10 +6578,12 @@ function cambiarCantidad(
         /*
            Si disminuimos Q35,
            verificamos que no deje más Q25
-           que Q35.
+           que Q35 (solo aplica si
+           la promoción está activa).
         */
 
         if(
+            PROMOCION_ACTIVA &&
             producto.tipo === "ceviche" &&
             producto.precio === 35
         ){
@@ -6509,10 +6663,13 @@ function eliminarProducto(
 
     /*
        No permite eliminar Q35
-       si eso dejaría Q25 sin respaldo.
+       si eso dejaría Q25 sin respaldo
+       (solo aplica si la promoción
+       está activa).
     */
 
     if(
+        PROMOCION_ACTIVA &&
         producto.tipo === "ceviche" &&
         producto.precio === 35
     ){
@@ -6651,6 +6808,7 @@ function crearDetalleProducto(
         · 🥑 ${producto.aguacate}
         · 🍞 ${producto.acompanante}
         · 🥒 ${producto.pepino}
+        · 🐌 ${producto.caracoles}
     `;
 
 }
@@ -6672,10 +6830,13 @@ function crearControlesProducto(
 
 
     /*
-       SOLO Q25 necesita límite.
+       SOLO Q25 necesita límite
+       (solo relevante si la promoción
+       está activa).
     */
 
     if(
+        PROMOCION_ACTIVA &&
         producto.tipo === "ceviche" &&
         producto.precio === 25
     ){
@@ -6877,6 +7038,8 @@ function renderizarLista(
 
     /*
        INFORMACION DE PROMOCION
+       (solo se muestra si
+       PROMOCION_ACTIVA es true)
     */
 
     const cantidadQ35 =
@@ -6892,6 +7055,7 @@ function renderizarLista(
 
 
     if(
+        PROMOCION_ACTIVA &&
         cantidadQ35 > 0
     ){
 
@@ -7321,6 +7485,7 @@ function enviarPedido(){
 
 
     if(
+        PROMOCION_ACTIVA &&
         cantidadPromo > 0
     ){
 
@@ -7400,6 +7565,13 @@ function enviarPedido(){
 
                     "🥒 Pepino: " +
                     producto.pepino +
+                    "\n";
+
+
+                mensaje +=
+
+                    "🐌 Caracoles: " +
+                    producto.caracoles +
                     "\n";
 
             }
